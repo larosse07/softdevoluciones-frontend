@@ -1,0 +1,207 @@
+<section class="page">
+
+  <!-- ENCABEZADO -->
+  <header class="page-heading">
+
+    <h1>
+      Mis devoluciones
+    </h1>
+
+    <p>
+      Aquí puedes ver el estado de tus solicitudes de devolución.
+    </p>
+
+  </header>
+
+
+  <!-- ERROR -->
+  @if (error) {
+
+    <div class="error-message">
+      {{ error }}
+    </div>
+
+  }
+
+
+  <!-- CARGANDO -->
+  @if (loading) {
+
+    <div class="loading-card">
+      Cargando tus devoluciones...
+    </div>
+
+  } @else {
+
+
+    @if (devoluciones.length === 0) {
+
+      <div class="empty-card">
+
+        <div class="empty-icon">
+          ↩
+        </div>
+
+        <h3>
+          No tienes solicitudes de devolución
+        </h3>
+
+        <p>
+          Cuando solicites una devolución, aparecerá aquí.
+        </p>
+
+      </div>
+
+    } @else {
+
+
+      <!-- TABLA -->
+      <div class="table-card">
+
+        <div class="table-scroll">
+
+
+          <!-- CABECERA -->
+          <div class="table-row table-head">
+
+            <span>
+              N° Solicitud
+            </span>
+
+            <span>
+              N° Compra
+            </span>
+
+            <span>
+              Fecha
+            </span>
+
+            <span>
+              Productos
+            </span>
+
+            <span>
+              Estado
+            </span>
+
+            <span>
+              Total dev.
+            </span>
+
+            <span class="col-actions">
+              Acciones
+            </span>
+
+          </div>
+
+
+          <!-- FILAS -->
+          @for (
+            devolucion of devoluciones;
+            track devolucion.id
+          ) {
+
+            <div class="table-row">
+
+
+              <!-- SOLICITUD -->
+              <strong class="col-id">
+
+                #D-{{ devolucion.id }}
+
+              </strong>
+
+
+              <!-- COMPRA -->
+              <span class="col-compra">
+
+                #{{ devolucion.compraId }}
+
+              </span>
+
+
+              <!-- FECHA -->
+              <span class="col-date">
+
+                {{ formatearFecha(
+                    devolucion.fechaSolicitud
+                ) }}
+
+              </span>
+
+
+              <!-- PRODUCTOS -->
+              <span
+                class="col-products"
+                [title]="productosResumen(devolucion)">
+
+                {{ cantidadProductos(devolucion) }}
+
+                {{
+                  cantidadProductos(devolucion) === 1
+                    ? 'producto'
+                    : 'productos'
+                }}
+
+              </span>
+
+
+              <!-- ESTADO -->
+              <span class="col-status">
+
+                <span
+                  [class]="'badge ' + claseEstado(
+                    devolucion.estado
+                  )">
+
+                  {{ formatearEstado(
+                      devolucion.estado
+                  ) }}
+
+                </span>
+
+              </span>
+
+
+              <!-- TOTAL -->
+              <strong class="col-total">
+
+                S/
+                {{
+                  devolucion.importe
+                    | number:'1.2-2'
+                }}
+
+              </strong>
+
+
+              <!-- ACCIONES -->
+              <span class="col-actions">
+
+                <a
+                  [routerLink]="[
+                    '/cliente/devoluciones',
+                    devolucion.id
+                  ]"
+                  class="detail-button">
+
+                  Ver
+
+                </a>
+
+              </span>
+
+
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+
+    }
+
+  }
+
+</section>

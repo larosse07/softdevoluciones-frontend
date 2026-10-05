@@ -1,0 +1,291 @@
+/* ===== PÁGINA ===== */
+
+.page {
+  padding: 24px 32px;
+  background: #f6f7fb;
+  min-height: 100%;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #1f2937;
+}
+
+.page-heading h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.page-heading p {
+  margin: 0 0 20px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+
+/* ===== FILTROS ===== */
+
+.filters-card {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.search-box {
+  flex: 1;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.search-box input,
+.filters-card select {
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  color: #374151;
+  outline: none;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0 12px 0 34px;
+  box-sizing: border-box;
+}
+
+.filters-card select {
+  padding: 0 12px;
+}
+
+.search-box input:focus,
+.filters-card select:focus {
+  border-color: #e8650f;
+  box-shadow: 0 0 0 3px rgba(232, 101, 15, 0.15);
+}
+
+
+/* ===== TABLA ===== */
+
+.table-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.3fr 1fr 1.2fr;
+  align-items: center;
+  column-gap: 16px;
+  min-width: 640px;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f0f1f5;
+  font-size: 14px;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.table-head {
+  padding: 14px 24px;
+  background: #fafafa;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.table-row:not(.table-head):hover {
+  background: #fff8f3;
+}
+
+.col-id,
+.col-total {
+  font-weight: 700;
+  color: #111827;
+}
+
+.col-date {
+  color: #374151;
+}
+
+.col-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.table-head .col-actions {
+  justify-content: flex-end;
+}
+
+
+/* ===== ESTADO ===== */
+
+.col-status {
+  display: flex;
+  align-items: center;
+}
+
+
+/* BASE DEL RECTÁNGULO */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 88px;
+  height: 28px;
+
+  padding: 0 12px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+
+/* ===== ENTREGADA - VERDE ===== */
+
+.badge.delivered,
+.badge.entregada,
+.badge.ENTREGADA {
+  background: #d9f5e3;
+  color: #1e7f4f;
+}
+
+
+/* ===== EN TRÁNSITO - AZUL ===== */
+
+.badge.transit,
+.badge.en-transito,
+.badge.EN_TRANSITO {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+
+/* ===== PENDIENTE - AMARILLO ===== */
+
+.badge.pending,
+.badge.pendiente,
+.badge.PENDIENTE {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+
+/* ===== DEVUELTA - MORADO ===== */
+
+.badge.returned,
+.badge.devuelta,
+.badge.DEVUELTA {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+
+/* ===== CANCELADA - ROJO ===== */
+
+.badge.cancelled,
+.badge.cancelada,
+.badge.CANCELADA {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+
+/* ===== BOTÓN ===== */
+
+.detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 16px;
+
+  border: 1px solid #e8650f;
+  border-radius: 6px;
+
+  background: #fff;
+  color: #e8650f;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.detail-button:hover {
+  background: #e8650f;
+  color: #fff;
+}
+
+
+/* ===== ESTADOS VACÍO / CARGA / ERROR ===== */
+
+.loading-card,
+.empty-card {
+  padding: 40px 24px;
+
+  background: #fff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  text-align: center;
+
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.empty-card h3 {
+  margin: 0 0 4px;
+  color: #111827;
+}
+
+.empty-card p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.error-message {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 13px;
+}

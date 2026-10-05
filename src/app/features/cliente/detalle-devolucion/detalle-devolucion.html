@@ -1,0 +1,191 @@
+<div class="detalle-page">
+
+  <div class="detalle-container">
+
+    <!-- CABECERA -->
+    <header class="page-header">
+
+      <button
+        type="button"
+        class="back-link"
+        (click)="volver()"
+      >
+        <span>←</span>
+        Mis devoluciones
+      </button>
+
+      <div class="header-content">
+        <div>
+          <p class="eyebrow">DEVOLUCIONES</p>
+          <h1>Detalle de devolución</h1>
+        </div>
+
+        <div class="request-number">
+          Solicitud #D-{{ devolucion.id.toString().padStart(3, '0') }}
+        </div>
+      </div>
+
+    </header>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="detail-content">
+
+      <!-- INFORMACIÓN -->
+      <section class="information-section">
+
+        <h2>Información</h2>
+
+        <div class="info-list">
+
+          <div class="info-row">
+            <span class="info-label">Estado</span>
+
+            <span
+              class="status"
+              [ngClass]="estadoClase()"
+            >
+              <span class="status-dot"></span>
+              {{ devolucion.estado }}
+            </span>
+          </div>
+
+
+          <div class="info-row">
+            <span class="info-label">Fecha de solicitud</span>
+
+            <span class="info-value">
+              {{ devolucion.fechaSolicitud }}
+            </span>
+          </div>
+
+
+          <div class="info-row">
+            <span class="info-label">Motivo</span>
+
+            <span class="info-value">
+              {{ devolucion.motivo }}
+            </span>
+          </div>
+
+
+          <div class="info-row comment-row">
+            <span class="info-label">Comentario</span>
+
+            <span class="info-value comment">
+              {{ devolucion.comentario || 'Sin comentario.' }}
+            </span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PRODUCTOS -->
+      <section class="products-section">
+
+        <div class="section-heading">
+          <h2>Productos</h2>
+          <span>{{ devolucion.detalles.length }} producto(s)</span>
+        </div>
+
+
+        <div class="products-table">
+
+          <div class="table-header">
+            <span>Producto</span>
+            <span>Cantidad</span>
+            <span>Importe</span>
+          </div>
+
+
+          <div
+            class="product-row"
+            *ngFor="let detalle of devolucion.detalles"
+          >
+
+            <div class="product-info">
+
+              <div class="product-image">
+
+                <img
+                  *ngIf="detalle.imagenUrl"
+                  [src]="detalle.imagenUrl"
+                  [alt]="detalle.productoNombre"
+                >
+
+                <span *ngIf="!detalle.imagenUrl">
+                  —
+                </span>
+
+              </div>
+
+              <div class="product-name">
+                {{ detalle.productoNombre }}
+              </div>
+
+            </div>
+
+
+            <div class="product-quantity">
+              {{ detalle.cantidad }}
+            </div>
+
+
+            <div class="product-price">
+              S/ {{ detalle.importe | number:'1.2-2' }}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="total-row">
+          <span>Total</span>
+
+          <strong>
+            S/ {{ total | number:'1.2-2' }}
+          </strong>
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- OBSERVACIÓN -->
+    <section
+      class="observation-section"
+      *ngIf="devolucion.observacionOperador"
+    >
+
+      <div class="observation-heading">
+        <h2>Observación del operador</h2>
+      </div>
+
+      <p>
+        {{ devolucion.observacionOperador }}
+      </p>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="page-footer">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="volver()"
+      >
+        <span>←</span>
+        Volver
+      </button>
+
+    </footer>
+
+  </div>
+
+</div>

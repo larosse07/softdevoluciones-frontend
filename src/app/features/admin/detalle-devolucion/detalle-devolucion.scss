@@ -1,0 +1,317 @@
+:host {
+  display: block;
+}
+
+.detalle-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.btn-volver {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 14px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.expediente {
+  border-top: 1px solid #e5e7eb;
+}
+
+.seccion {
+  padding: 24px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.seccion-titulo {
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+  }
+}
+
+.datos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px 32px;
+}
+
+.dato {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.etiqueta {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dato strong {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.estado {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 9px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.estado.solicitada {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.estado.en-revision {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.estado.aprobada {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.estado.rechazada {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.estado.completada {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.campo-texto {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    margin: 7px 0 0;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+.tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  border-bottom: 1px solid #d1d5db;
+}
+
+th {
+  padding: 11px 12px;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #374151;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.producto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 220px;
+}
+
+.producto img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.producto div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.producto strong {
+  color: #111827;
+  font-size: 14px;
+}
+
+.producto small {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.sin-productos {
+  padding: 16px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.resumen {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.resumen-linea {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 32px;
+  padding-top: 8px;
+
+  span {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  strong {
+    color: #111827;
+    font-size: 20px;
+  }
+}
+
+.estado-pagina {
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #e5e7eb;
+  border-top-color: #374151;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+.mensaje-error {
+  padding: 16px;
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 800px) {
+  .detalle-page {
+    padding: 18px;
+  }
+
+  .datos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .detalle-page {
+    padding: 14px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
+
+  .datos-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .seccion {
+    padding: 20px 0;
+  }
+
+  .resumen-linea {
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .resumen-linea strong {
+    font-size: 18px;
+  }
+
+  .producto {
+    min-width: 190px;
+  }
+
+  .producto img {
+    width: 42px;
+    height: 42px;
+  }
+}

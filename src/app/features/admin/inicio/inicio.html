@@ -1,0 +1,401 @@
+<section class="page">
+
+  <header class="page-header">
+
+<div>
+
+  <p class="eyebrow">
+    Panel administrativo
+  </p>
+
+  <h1>
+    Inicio
+  </h1>
+
+  <p class="subtitle">
+    Resumen general de compras y devoluciones.
+  </p>
+
+</div>
+
+<button
+  type="button"
+  class="btn-refresh"
+  (click)="cargarDashboard()"
+  [disabled]="cargando"
+>
+
+  <span class="refresh-icon">
+    ↻
+  </span>
+
+  Actualizar
+
+</button>
+
+  </header>
+
+@if (error) {
+
+<div class="alert-error">
+
+  <strong>
+    Aviso
+  </strong>
+
+  <span>
+    {{ error }}
+  </span>
+
+</div>
+
+}
+
+@if (cargando) {
+
+<div class="state-container">
+
+  <div class="spinner"></div>
+
+  <p>
+    Cargando información...
+  </p>
+
+</div>
+
+} @else {
+
+<!-- COMPRAS -->
+<section class="section">
+
+  <div class="section-heading">
+
+    <h2>
+      Compras
+    </h2>
+
+    <a
+      routerLink="/admin/compras"
+      class="section-link"
+    >
+      Ver compras →
+    </a>
+
+  </div>
+
+
+  <div class="summary-row">
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        Compras
+      </span>
+
+      <strong class="summary-value">
+        {{ totalCompras }}
+      </strong>
+
+    </div>
+
+
+    <span class="summary-separator">
+      ·
+    </span>
+
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        En tránsito
+      </span>
+
+      <strong class="summary-value">
+        {{ comprasEnTransito }}
+      </strong>
+
+    </div>
+
+
+    <span class="summary-separator">
+      ·
+    </span>
+
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        Entregadas
+      </span>
+
+      <strong class="summary-value">
+        {{ comprasEntregadas }}
+      </strong>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DEVOLUCIONES -->
+<section class="section">
+
+  <div class="section-heading">
+
+    <h2>
+      Devoluciones
+    </h2>
+
+    <a
+      routerLink="/admin/devoluciones"
+      class="section-link"
+    >
+      Ver devoluciones →
+    </a>
+
+  </div>
+
+
+  <div class="summary-row summary-row-devoluciones">
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        Solicitudes
+      </span>
+
+      <strong class="summary-value">
+        {{ totalDevoluciones }}
+      </strong>
+
+    </div>
+
+
+    <span class="summary-separator">
+      ·
+    </span>
+
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        Solicitadas
+      </span>
+
+      <strong class="summary-value">
+        {{ devolucionesSolicitadas }}
+      </strong>
+
+    </div>
+
+
+    <span class="summary-separator">
+      ·
+    </span>
+
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        En revisión
+      </span>
+
+      <strong class="summary-value">
+        {{ devolucionesEnRevision }}
+      </strong>
+
+    </div>
+
+
+    <span class="summary-separator">
+      ·
+    </span>
+
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        Aprobadas
+      </span>
+
+      <strong class="summary-value">
+        {{ devolucionesAprobadas }}
+      </strong>
+
+    </div>
+
+
+    <span class="summary-separator">
+      ·
+    </span>
+
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        Rechazadas
+      </span>
+
+      <strong class="summary-value">
+        {{ devolucionesRechazadas }}
+      </strong>
+
+    </div>
+
+
+    <span class="summary-separator">
+      ·
+    </span>
+
+
+    <div class="summary-item">
+
+      <span class="summary-label">
+        Completadas
+      </span>
+
+      <strong class="summary-value">
+        {{ devolucionesCompletadas }}
+      </strong>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SOLICITUDES RECIENTES -->
+<section class="section recent-section">
+
+  <div class="section-heading">
+
+    <div>
+
+      <h2>
+        Solicitudes recientes
+      </h2>
+
+      <span class="section-description">
+        Últimas solicitudes disponibles.
+      </span>
+
+    </div>
+
+    <a
+      routerLink="/admin/devoluciones"
+      class="section-link"
+    >
+      Ver todas →
+    </a>
+
+  </div>
+
+
+  @if (devoluciones.length === 0) {
+
+    <div class="empty">
+      No hay solicitudes registradas.
+    </div>
+
+  } @else {
+
+    <div class="table-container">
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Solicitud</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Importe</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              devolucion of devoluciones.slice(0, 5);
+              track trackById($index, devolucion)
+            ) {
+
+              <tr>
+
+                <td>
+                  <strong>
+                    #D-{{ devolucion.id }}
+                  </strong>
+                </td>
+
+                <td>
+                  {{ nombreCliente(devolucion) }}
+                </td>
+
+                <td>
+                  {{ formatearFecha(devolucion.fechaSolicitud) }}
+                </td>
+
+                <td>
+                  <strong>
+                    {{ formatearMoneda(devolucion.importe) }}
+                  </strong>
+                </td>
+
+                <td>
+
+                  <span
+                    class="status"
+                    [ngClass]="estadoClase(devolucion.estado)"
+                  >
+
+                    <span class="status-dot"></span>
+
+                    {{ estadoTexto(devolucion.estado) }}
+
+                  </span>
+
+                </td>
+
+                <td>
+
+                  <a
+                    class="btn-view"
+                    [routerLink]="[
+                      '/admin/detalle-devolucion',
+                      devolucion.id
+                    ]"
+                  >
+                    Ver
+                  </a>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  }
+
+</section>
+
+}
+
+</section>

@@ -1,0 +1,618 @@
+<section class="page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Devoluciones</h1>
+
+      <p>
+        Gestiona las solicitudes de devolución según su estado.
+      </p>
+    </div>
+
+  </div>
+
+
+  @if (cargando) {
+
+    <div class="message">
+      Cargando devoluciones...
+    </div>
+
+  } @else if (error) {
+
+    <div class="message error">
+      {{ error }}
+    </div>
+
+  } @else {
+
+    <div class="kanban">
+
+
+      <!-- SOLICITADAS -->
+
+      <section class="kanban-column">
+
+        <div class="column-header solicitada">
+
+          <div>
+            <h2>Solicitadas</h2>
+            <span>
+              {{ obtenerPorEstado('SOLICITADA').length }}
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="column-content">
+
+          @if (obtenerPorEstado('SOLICITADA').length === 0) {
+
+            <div class="empty-column">
+              No hay solicitudes.
+            </div>
+
+          } @else {
+
+            @for (
+              devolucion of obtenerPorEstado('SOLICITADA');
+              track devolucion.id
+            ) {
+
+              <article class="ticket">
+
+                <div class="ticket-top">
+
+                  <strong>
+                    #D-{{ devolucion.id }}
+                  </strong>
+
+                  <span class="status solicitada">
+                    Solicitada
+                  </span>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Motivo
+                  </span>
+
+                  <p>
+                    {{ devolucion.motivo }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Fecha
+                  </span>
+
+                  <p>
+                    {{ formatearFecha(devolucion.fechaSolicitud) }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-bottom">
+
+                  <strong class="amount">
+                    S/ {{ devolucion.importe | number:'1.2-2' }}
+                  </strong>
+
+                </div>
+
+
+                <div class="ticket-actions">
+
+                  <a
+                    [routerLink]="[
+                      '/operador/detalle-devolucion',
+                      devolucion.id
+                    ]"
+                    class="secondary-button">
+
+                    Ver detalle
+
+                  </a>
+
+
+                  <button
+                    type="button"
+                    class="primary-button"
+                    (click)="cambiarEstado(
+                      devolucion,
+                      'EN_REVISION'
+                    )"
+                    [disabled]="estaProcesando(devolucion.id)">
+
+                    {{
+                      estaProcesando(devolucion.id)
+                        ? 'Procesando...'
+                        : 'Iniciar revisión'
+                    }}
+
+                  </button>
+
+                </div>
+
+              </article>
+
+            }
+
+          }
+
+        </div>
+
+      </section>
+
+
+
+      <!-- EN REVISIÓN -->
+
+      <section class="kanban-column">
+
+        <div class="column-header en-revision">
+
+          <div>
+            <h2>En revisión</h2>
+
+            <span>
+              {{ obtenerPorEstado('EN_REVISION').length }}
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="column-content">
+
+          @if (obtenerPorEstado('EN_REVISION').length === 0) {
+
+            <div class="empty-column">
+              No hay solicitudes.
+            </div>
+
+          } @else {
+
+            @for (
+              devolucion of obtenerPorEstado('EN_REVISION');
+              track devolucion.id
+            ) {
+
+              <article class="ticket">
+
+                <div class="ticket-top">
+
+                  <strong>
+                    #D-{{ devolucion.id }}
+                  </strong>
+
+                  <span class="status en-revision">
+                    En revisión
+                  </span>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Motivo
+                  </span>
+
+                  <p>
+                    {{ devolucion.motivo }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Fecha
+                  </span>
+
+                  <p>
+                    {{ formatearFecha(devolucion.fechaSolicitud) }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-bottom">
+
+                  <strong class="amount">
+                    S/ {{ devolucion.importe | number:'1.2-2' }}
+                  </strong>
+
+                </div>
+
+
+                <div class="ticket-actions">
+
+                  <a
+                    [routerLink]="[
+                      '/operador/detalle-devolucion',
+                      devolucion.id
+                    ]"
+                    class="secondary-button">
+
+                    Ver detalle
+
+                  </a>
+
+
+                  <button
+                    type="button"
+                    class="approve-button"
+                    (click)="cambiarEstado(
+                      devolucion,
+                      'APROBADA'
+                    )"
+                    [disabled]="estaProcesando(devolucion.id)">
+
+                    Aprobar
+
+                  </button>
+
+
+                  <button
+                    type="button"
+                    class="reject-button"
+                    (click)="cambiarEstado(
+                      devolucion,
+                      'RECHAZADA'
+                    )"
+                    [disabled]="estaProcesando(devolucion.id)">
+
+                    Rechazar
+
+                  </button>
+
+                </div>
+
+              </article>
+
+            }
+
+          }
+
+        </div>
+
+      </section>
+
+
+
+      <!-- APROBADAS -->
+
+      <section class="kanban-column">
+
+        <div class="column-header aprobada">
+
+          <div>
+            <h2>Aprobadas</h2>
+
+            <span>
+              {{ obtenerPorEstado('APROBADA').length }}
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="column-content">
+
+          @if (obtenerPorEstado('APROBADA').length === 0) {
+
+            <div class="empty-column">
+              No hay solicitudes.
+            </div>
+
+          } @else {
+
+            @for (
+              devolucion of obtenerPorEstado('APROBADA');
+              track devolucion.id
+            ) {
+
+              <article class="ticket">
+
+                <div class="ticket-top">
+
+                  <strong>
+                    #D-{{ devolucion.id }}
+                  </strong>
+
+                  <span class="status aprobada">
+                    Aprobada
+                  </span>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Motivo
+                  </span>
+
+                  <p>
+                    {{ devolucion.motivo }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-bottom">
+
+                  <strong class="amount">
+                    S/ {{ devolucion.importe | number:'1.2-2' }}
+                  </strong>
+
+                </div>
+
+
+                <div class="ticket-actions">
+
+                  <a
+                    [routerLink]="[
+                      '/operador/detalle-devolucion',
+                      devolucion.id
+                    ]"
+                    class="secondary-button">
+
+                    Ver detalle
+
+                  </a>
+
+
+                  <button
+                    type="button"
+                    class="complete-button"
+                    (click)="cambiarEstado(
+                      devolucion,
+                      'COMPLETADA'
+                    )"
+                    [disabled]="estaProcesando(devolucion.id)">
+
+                    {{
+                      estaProcesando(devolucion.id)
+                        ? 'Procesando...'
+                        : 'Completar'
+                    }}
+
+                  </button>
+
+                </div>
+
+              </article>
+
+            }
+
+          }
+
+        </div>
+
+      </section>
+
+
+
+      <!-- RECHAZADAS -->
+
+      <section class="kanban-column">
+
+        <div class="column-header rechazada">
+
+          <div>
+            <h2>Rechazadas</h2>
+
+            <span>
+              {{ obtenerPorEstado('RECHAZADA').length }}
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="column-content">
+
+          @if (obtenerPorEstado('RECHAZADA').length === 0) {
+
+            <div class="empty-column">
+              No hay solicitudes.
+            </div>
+
+          } @else {
+
+            @for (
+              devolucion of obtenerPorEstado('RECHAZADA');
+              track devolucion.id
+            ) {
+
+              <article class="ticket">
+
+                <div class="ticket-top">
+
+                  <strong>
+                    #D-{{ devolucion.id }}
+                  </strong>
+
+                  <span class="status rechazada">
+                    Rechazada
+                  </span>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Motivo
+                  </span>
+
+                  <p>
+                    {{ devolucion.motivo }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Observación
+                  </span>
+
+                  <p>
+                    {{ devolucion.observacionOperador || 'Sin observación' }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-bottom">
+
+                  <strong class="amount">
+                    S/ {{ devolucion.importe | number:'1.2-2' }}
+                  </strong>
+
+                </div>
+
+
+                <div class="ticket-actions">
+
+                  <a
+                    [routerLink]="[
+                      '/operador/detalle-devolucion',
+                      devolucion.id
+                    ]"
+                    class="secondary-button">
+
+                    Ver detalle
+
+                  </a>
+
+                </div>
+
+              </article>
+
+            }
+
+          }
+
+        </div>
+
+      </section>
+
+
+
+      <!-- COMPLETADAS -->
+
+      <section class="kanban-column">
+
+        <div class="column-header completada">
+
+          <div>
+            <h2>Completadas</h2>
+
+            <span>
+              {{ obtenerPorEstado('COMPLETADA').length }}
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="column-content">
+
+          @if (obtenerPorEstado('COMPLETADA').length === 0) {
+
+            <div class="empty-column">
+              No hay solicitudes.
+            </div>
+
+          } @else {
+
+            @for (
+              devolucion of obtenerPorEstado('COMPLETADA');
+              track devolucion.id
+            ) {
+
+              <article class="ticket">
+
+                <div class="ticket-top">
+
+                  <strong>
+                    #D-{{ devolucion.id }}
+                  </strong>
+
+                  <span class="status completada">
+                    Completada
+                  </span>
+
+                </div>
+
+
+                <div class="ticket-info">
+
+                  <span class="ticket-label">
+                    Motivo
+                  </span>
+
+                  <p>
+                    {{ devolucion.motivo }}
+                  </p>
+
+                </div>
+
+
+                <div class="ticket-bottom">
+
+                  <strong class="amount">
+                    S/ {{ devolucion.importe | number:'1.2-2' }}
+                  </strong>
+
+                </div>
+
+
+                <div class="ticket-actions">
+
+                  <a
+                    [routerLink]="[
+                      '/operador/detalle-devolucion',
+                      devolucion.id
+                    ]"
+                    class="secondary-button">
+
+                    Ver detalle
+
+                  </a>
+
+                </div>
+
+              </article>
+
+            }
+
+          }
+
+        </div>
+
+      </section>
+
+
+    </div>
+
+  }
+
+</section>

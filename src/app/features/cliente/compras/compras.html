@@ -1,0 +1,86 @@
+<section class="page">
+
+  <!-- ENCABEZADO -->
+  <header class="page-heading">
+    <h1>Mis compras</h1>
+    <p>Aquí puedes ver tus compras realizadas y solicitar devoluciones.</p>
+  </header>
+
+  <!-- FILTROS -->
+  <div class="filters-card">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input
+        type="text"
+        [(ngModel)]="busqueda"
+        placeholder="Buscar por número de compra o producto..."
+        aria-label="Buscar compras">
+    </div>
+
+    <select [(ngModel)]="filtroFecha" aria-label="Filtrar por fecha">
+      <option value="TODAS">Todas las fechas</option>
+      <option value="ULTIMO_MES">Último mes</option>
+      <option value="ULTIMOS_3_MESES">Últimos 3 meses</option>
+      <option value="ULTIMO_ANO">Último año</option>
+    </select>
+  </div>
+
+  <!-- ERROR -->
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  <!-- CARGANDO -->
+  @if (loading) {
+    <div class="loading-card">Cargando tus compras...</div>
+  } @else {
+
+    @if (comprasFiltradas.length === 0) {
+      <div class="empty-card">
+        <div class="empty-icon">🛒</div>
+        <h3>No se encontraron compras</h3>
+        <p>No hay compras que coincidan con tu búsqueda.</p>
+      </div>
+    } @else {
+
+      <!-- TABLA -->
+      <div class="table-card">
+        <div class="table-scroll">
+
+          <div class="table-row table-head">
+            <span>N° Compra</span>
+            <span>Fecha</span>
+            <span>Estado</span>
+            <span>Total</span>
+            <span class="col-actions">Acciones</span>
+          </div>
+
+          @for (compra of comprasFiltradas; track compra.id) {
+            <div class="table-row">
+
+              <strong class="col-id">#{{ compra.id }}</strong>
+
+              <span class="col-date">{{ formatearFecha(compra.fecha) }}</span>
+
+              <span class="col-status">
+                <span [class]="'badge ' + claseEstado(compra.estado)">
+                  {{ formatearEstado(compra.estado) }}
+                </span>
+              </span>
+
+              <strong class="col-total">S/ {{ compra.total | number:'1.2-2' }}</strong>
+
+              <span class="col-actions">
+                <a [routerLink]="['/cliente/compras', compra.id]" class="detail-button">
+                  Ver detalles
+                </a>
+              </span>
+
+            </div>
+          }
+
+        </div>
+      </div>
+    }
+  }
+</section>

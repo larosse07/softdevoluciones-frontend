@@ -1,0 +1,383 @@
+<section class="page">
+
+  <header class="page-header">
+
+    <div>
+      <p class="eyebrow">Administración</p>
+
+      <h1>Devoluciones</h1>
+
+      <p class="subtitle">
+        Consulta y seguimiento de todas las solicitudes de devolución.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn-refresh"
+      (click)="buscar()"
+      [disabled]="cargando"
+    >
+      <span class="refresh-icon">↻</span>
+      Actualizar
+    </button>
+
+  </header>
+
+
+  <section class="filters">
+
+    <div class="filter-field">
+
+      <label for="estado">
+        Estado
+      </label>
+
+      <select
+        id="estado"
+        [(ngModel)]="filtroEstado"
+      >
+        <option value="">
+          Todos
+        </option>
+
+        <option value="SOLICITADA">
+          Solicitada
+        </option>
+
+        <option value="EN_REVISION">
+          En revisión
+        </option>
+
+        <option value="APROBADA">
+          Aprobada
+        </option>
+
+        <option value="RECHAZADA">
+          Rechazada
+        </option>
+
+        <option value="COMPLETADA">
+          Completada
+        </option>
+      </select>
+
+    </div>
+
+
+    <div class="filter-field">
+
+      <label for="motivo">
+        Motivo
+      </label>
+
+      <input
+        id="motivo"
+        type="text"
+        [(ngModel)]="filtroMotivo"
+        placeholder="Buscar motivo..."
+        (keyup.enter)="aplicarFiltros()"
+      />
+
+    </div>
+
+
+    <div class="filter-field">
+
+      <label for="desde">
+        Desde
+      </label>
+
+      <input
+        id="desde"
+        type="date"
+        [(ngModel)]="fechaDesde"
+      />
+
+    </div>
+
+
+    <div class="filter-field">
+
+      <label for="hasta">
+        Hasta
+      </label>
+
+      <input
+        id="hasta"
+        type="date"
+        [(ngModel)]="fechaHasta"
+      />
+
+    </div>
+
+
+    <div class="filter-actions">
+
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="aplicarFiltros()"
+        [disabled]="cargando"
+      >
+        Buscar
+      </button>
+
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="limpiarFiltros()"
+      >
+        Limpiar
+      </button>
+
+    </div>
+
+  </section>
+
+
+  @if (error) {
+
+    <div class="alert-error">
+
+      <strong>
+        Ocurrió un problema
+      </strong>
+
+      <span>
+        {{ error }}
+      </span>
+
+    </div>
+
+  }
+
+
+  @if (cargando) {
+
+    <div class="state-container">
+
+      <div class="spinner"></div>
+
+      <p>
+        Cargando devoluciones...
+      </p>
+
+    </div>
+
+  } @else if (devoluciones.length === 0) {
+
+    <div class="state-container empty">
+
+      <div class="empty-icon">
+        ↩
+      </div>
+
+      <h2>
+        No hay devoluciones
+      </h2>
+
+      <p>
+        No se encontraron solicitudes con los filtros seleccionados.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <section class="table-container">
+
+      <div class="table-header">
+
+        <div>
+
+          <h2>
+            Solicitudes de devolución
+          </h2>
+
+          <span class="count">
+            {{ totalElementos }}
+            {{
+              totalElementos === 1
+                ? 'solicitud'
+                : 'solicitudes'
+            }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Solicitud</th>
+              <th>Cliente</th>
+              <th>Compra</th>
+              <th>Fecha</th>
+              <th>Motivo</th>
+              <th>Importe</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              devolucion of devoluciones;
+              track trackById($index, devolucion)
+            ) {
+
+              <tr>
+
+                <td>
+
+                  <span class="request-number">
+                    #D-{{ devolucion.id }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span class="client-name">
+                    {{ nombreCliente(devolucion) }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span class="purchase-number">
+                    #{{ devolucion.compraId }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <div class="date">
+
+                    <span>
+                      {{ formatearFecha(devolucion.fechaSolicitud) }}
+                    </span>
+
+                    <small>
+                      {{ formatearHora(devolucion.fechaSolicitud) }}
+                    </small>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <span class="reason">
+                    {{ devolucion.motivo || '-' }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span class="amount">
+                    {{ formatearMoneda(devolucion.importe) }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span
+                    class="status"
+                    [ngClass]="estadoClase(devolucion.estado)"
+                  >
+
+                    <span class="status-dot"></span>
+
+                    {{ estadoTexto(devolucion.estado) }}
+
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <a
+                    class="btn-view"
+                    [routerLink]="[
+                      '/admin/detalle-devolucion',
+                      devolucion.id
+                    ]"
+                  >
+                    Ver detalle
+                  </a>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      @if (totalPaginas > 1) {
+
+        <div class="pagination">
+
+          <button
+            type="button"
+            class="page-button"
+            (click)="paginaAnterior()"
+            [disabled]="paginaActual === 0"
+          >
+            Anterior
+          </button>
+
+
+          <span class="page-info">
+            Página {{ paginaActual + 1 }}
+            de {{ totalPaginas }}
+          </span>
+
+
+          <button
+            type="button"
+            class="page-button"
+            (click)="paginaSiguiente()"
+            [disabled]="
+              paginaActual >= totalPaginas - 1
+            "
+          >
+            Siguiente
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+  }
+
+</section>

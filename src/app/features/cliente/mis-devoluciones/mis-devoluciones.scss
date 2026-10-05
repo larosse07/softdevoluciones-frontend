@@ -1,0 +1,268 @@
+/* ===== PÁGINA ===== */
+
+.page {
+  padding: 24px 32px;
+  background: #f6f7fb;
+  min-height: 100%;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #1f2937;
+}
+
+
+/* ===== CABECERA ===== */
+
+.page-heading h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.page-heading p {
+  margin: 0 0 20px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+
+/* ===== TABLA ===== */
+
+.table-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    1.1fr
+    1.2fr
+    1.3fr
+    1fr
+    0.9fr;
+
+  align-items: center;
+
+  column-gap: 14px;
+
+  min-width: 900px;
+
+  padding: 17px 24px;
+
+  border-bottom: 1px solid #f0f1f5;
+
+  font-size: 14px;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+
+/* ===== CABECERA TABLA ===== */
+
+.table-head {
+  padding: 14px 24px;
+
+  background: #fafafa;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #4b5563;
+}
+
+.table-row:not(.table-head):hover {
+  background: #fff8f3;
+}
+
+
+/* ===== COLUMNAS ===== */
+
+.col-id,
+.col-total {
+  font-weight: 700;
+  color: #111827;
+}
+
+.col-compra {
+  color: #374151;
+}
+
+.col-date {
+  color: #374151;
+}
+
+.col-products {
+  color: #374151;
+}
+
+.col-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ===== ESTADO ===== */
+
+.col-status {
+  display: flex;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 92px;
+  height: 28px;
+
+  padding: 0 12px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+
+/* SOLICITADA */
+
+.badge.requested {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+
+/* EN REVISIÓN */
+
+.badge.review {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+
+/* APROBADA */
+
+.badge.approved {
+  background: #d9f5e3;
+  color: #1e7f4f;
+}
+
+
+/* RECHAZADA */
+
+.badge.rejected {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+
+/* COMPLETADA */
+
+.badge.completed {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+
+/* ===== BOTÓN ===== */
+
+.detail-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 58px;
+  height: 34px;
+
+  padding: 0 14px;
+
+  border: 1px solid #e8650f;
+  border-radius: 6px;
+
+  background: #fff;
+  color: #e8650f;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.detail-button:hover {
+  background: #e8650f;
+  color: #fff;
+}
+
+
+/* ===== CARGANDO / VACÍO ===== */
+
+.loading-card,
+.empty-card {
+  padding: 40px 24px;
+
+  background: #fff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  text-align: center;
+
+  color: #6b7280;
+}
+
+.empty-icon {
+  margin-bottom: 8px;
+  font-size: 36px;
+}
+
+.empty-card h3 {
+  margin: 0 0 4px;
+  color: #111827;
+}
+
+.empty-card p {
+  margin: 0;
+  font-size: 13px;
+}
+
+
+/* ===== ERROR ===== */
+
+.error-message {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 13px;
+}

@@ -1,0 +1,232 @@
+<div class="detalle-page">
+
+  <div class="page-header">
+
+    <div>
+      <button
+        type="button"
+        class="btn-volver"
+        (click)="volver()"
+      >
+        ← Volver a devoluciones
+      </button>
+
+      <h1>Detalle de devolución</h1>
+
+      @if (devolucion) {
+        <p>
+          Solicitud #{{ devolucion.id }}
+        </p>
+      }
+    </div>
+
+  </div>
+
+  @if (cargando) {
+
+    <div class="estado-pagina">
+      <span class="spinner"></span>
+      <span>Cargando detalle...</span>
+    </div>
+
+  } @else if (error) {
+
+    <div class="mensaje-error">
+      {{ error }}
+    </div>
+
+  } @else if (devolucion) {
+
+    <section class="expediente">
+
+      <div class="seccion">
+
+        <div class="seccion-titulo">
+          <h2>Información de la solicitud</h2>
+        </div>
+
+        <div class="datos-grid">
+
+          <div class="dato">
+            <span class="etiqueta">N.º solicitud</span>
+            <strong>#{{ devolucion.id }}</strong>
+          </div>
+
+          <div class="dato">
+            <span class="etiqueta">Estado</span>
+
+            <span
+              class="estado"
+              [class]="claseEstado(devolucion.estado)"
+            >
+              {{ formatearEstado(devolucion.estado) }}
+            </span>
+          </div>
+
+          <div class="dato">
+            <span class="etiqueta">Fecha de solicitud</span>
+            <strong>
+              {{ formatearFecha(devolucion.fechaSolicitud) }}
+            </strong>
+          </div>
+
+          <div class="dato">
+            <span class="etiqueta">Compra</span>
+            <strong>
+              #{{ devolucion.compraId }}
+            </strong>
+          </div>
+
+          <div class="dato">
+            <span class="etiqueta">Cliente</span>
+            <strong>
+              {{ nombreCliente() }}
+            </strong>
+          </div>
+
+          <div class="dato">
+            <span class="etiqueta">Usuario ID</span>
+            <strong>
+              #{{ devolucion.usuarioId ?? '-' }}
+            </strong>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="seccion">
+
+        <div class="seccion-titulo">
+          <h2>Motivo de devolución</h2>
+        </div>
+
+        <div class="campo-texto">
+          <span class="etiqueta">Motivo</span>
+
+          <p>
+            {{ devolucion.motivo || '-' }}
+          </p>
+        </div>
+
+        <div class="campo-texto">
+          <span class="etiqueta">Comentario del cliente</span>
+
+          <p>
+            {{ devolucion.comentario || 'Sin comentario.' }}
+          </p>
+        </div>
+
+        <div class="campo-texto">
+          <span class="etiqueta">Observación del operador</span>
+
+          <p>
+            {{ devolucion.observacionOperador || 'Sin observación.' }}
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="seccion">
+
+        <div class="seccion-titulo">
+          <h2>Productos devueltos</h2>
+        </div>
+
+        @if (devolucion.detalles.length > 0) {
+
+          <div class="tabla-contenedor">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Importe</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                @for (detalle of devolucion.detalles; track detalle.id) {
+
+                  <tr>
+
+                    <td>
+                      <div class="producto">
+
+                        @if (detalle.imagenUrl) {
+                          <img
+                            [src]="imagenProducto(detalle.imagenUrl)"
+                            [alt]="detalle.productoNombre || 'Producto'"
+                          />
+                        }
+
+                        <div>
+                          <strong>
+                            {{ detalle.productoNombre || 'Producto sin nombre' }}
+                          </strong>
+
+                          @if (detalle.productoId) {
+                            <small>
+                              Producto #{{ detalle.productoId }}
+                            </small>
+                          }
+                        </div>
+
+                      </div>
+                    </td>
+
+                    <td>
+                      {{ detalle.cantidad }}
+                    </td>
+
+                    <td>
+                      <strong>
+                        {{ formatearImporte(detalle.importe) }}
+                      </strong>
+                    </td>
+
+                  </tr>
+
+                }
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        } @else {
+
+          <div class="sin-productos">
+            No hay productos asociados a esta devolución.
+          </div>
+
+        }
+
+      </div>
+
+
+      <div class="seccion resumen">
+
+        <div class="resumen-linea">
+
+          <span>Importe total de devolución</span>
+
+          <strong>
+            {{ formatearImporte(devolucion.importe) }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

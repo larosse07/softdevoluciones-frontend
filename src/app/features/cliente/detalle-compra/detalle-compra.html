@@ -1,0 +1,267 @@
+<section class="page">
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb">
+
+    <a routerLink="/cliente/compras">
+      Mis compras
+    </a>
+
+    <span class="sep">›</span>
+
+    @if (compra) {
+
+      <span class="current">
+        Compra #{{ compra.id }}
+      </span>
+
+    }
+
+  </nav>
+
+
+  @if (error) {
+
+    <div class="error-message">
+      {{ error }}
+    </div>
+
+  }
+
+
+  @if (loading) {
+
+    <div class="loading-card">
+      Cargando detalle de la compra...
+    </div>
+
+  } @else if (compra) {
+
+
+    <!-- CABECERA -->
+    <header class="detail-header">
+
+      <h1>
+        Detalle de compra #{{ compra.id }}
+      </h1>
+
+      <p class="detail-meta">
+
+        <span>
+          Realizada el {{ formatearFecha(compra.fecha) }}
+        </span>
+
+        <span class="divider">
+          |
+        </span>
+
+        <span class="state-label">
+          Estado:
+        </span>
+
+        <span
+          [class]="'badge ' + claseEstado(compra.estado)">
+
+          {{ formatearEstado(compra.estado) }}
+
+        </span>
+
+      </p>
+
+    </header>
+
+
+    <!-- TABLA DE PRODUCTOS -->
+    <div class="table-card">
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Producto
+              </th>
+
+              <th>
+                Precio unitario
+              </th>
+
+              <th>
+                Cantidad
+              </th>
+
+              <th>
+                Subtotal
+              </th>
+
+              <th class="col-actions">
+                Acciones
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              detalle of compra.detalles;
+              track detalle.id
+            ) {
+
+              <tr>
+
+
+                <!-- PRODUCTO -->
+                <td>
+
+                  <div class="product-detail">
+
+                    <div class="product-image">
+
+                      @if (detalle.imagenUrl) {
+
+                        <img
+                          [src]="'http://localhost:8080' + detalle.imagenUrl"
+                          [alt]="detalle.productoNombre">
+
+                      } @else {
+
+                        <span>
+                          {{
+                            detalle.productoNombre
+                              .charAt(0)
+                              .toUpperCase()
+                          }}
+                        </span>
+
+                      }
+
+                    </div>
+
+
+                    <div class="product-text">
+
+                      <strong>
+                        {{ detalle.productoNombre }}
+                      </strong>
+
+                      @if (detalle.productoDescripcion) {
+
+                        <span>
+                          {{ detalle.productoDescripcion }}
+                        </span>
+
+                      }
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- PRECIO -->
+                <td class="num">
+
+                  S/
+                  {{
+                    detalle.precioUnitario
+                      | number:'1.2-2'
+                  }}
+
+                </td>
+
+
+                <!-- CANTIDAD -->
+                <td class="num">
+
+                  {{ detalle.cantidad }}
+
+                </td>
+
+
+                <!-- SUBTOTAL -->
+                <td class="num amount">
+
+                  S/
+                  {{
+                    subtotal(
+                      detalle.precioUnitario,
+                      detalle.cantidad
+                    )
+                    | number:'1.2-2'
+                  }}
+
+                </td>
+
+
+                <!-- ACCIONES -->
+                <td class="col-actions">
+
+                  @if (compra.estado === 'ENTREGADA') {
+
+                    <button
+                      type="button"
+                      class="detail-button"
+                      (click)="
+                        solicitarDevolucion(
+                          detalle.productoId
+                        )
+                      ">
+
+                      Solicitar devolución
+
+                    </button>
+
+                  } @else {
+
+                    <span class="no-return">
+                      No disponible
+                    </span>
+
+                  }
+
+                </td>
+
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- TOTAL -->
+      <div class="table-footer">
+
+        <span>
+          Total de la compra
+        </span>
+
+        <strong>
+
+          S/
+          {{
+            compra.total
+              | number:'1.2-2'
+          }}
+
+        </strong>
+
+      </div>
+
+    </div>
+
+  }
+
+</section>

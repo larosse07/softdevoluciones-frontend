@@ -1,0 +1,322 @@
+
+<section class="page">
+
+  <div class="welcome">
+    <div>
+      <span class="eyebrow">PANEL DEL CLIENTE</span>
+
+      <h1>Hola 👋</h1>
+
+      <p>
+        Aquí puedes consultar tus compras y solicitar devoluciones.
+      </p>
+    </div>
+  </div>
+
+
+  @if (errorCompras) {
+    <div class="error-message">
+      {{ errorCompras }}
+    </div>
+  }
+
+
+  @if (errorDevoluciones) {
+    <div class="error-message">
+      {{ errorDevoluciones }}
+    </div>
+  }
+
+
+  <!-- ESTADÍSTICAS -->
+
+  <div class="stats">
+
+    <article class="stat-card">
+      <div class="stat-icon orange">
+        🛒
+      </div>
+
+      <div class="stat-info">
+        <span>Compras totales</span>
+        <strong>{{ compras.length }}</strong>
+      </div>
+    </article>
+
+
+    <article class="stat-card">
+      <div class="stat-icon blue">
+        📦
+      </div>
+
+      <div class="stat-info">
+        <span>Productos comprados</span>
+        <strong>{{ totalProductos }}</strong>
+      </div>
+    </article>
+
+
+    <article class="stat-card">
+      <div class="stat-icon green">
+        ✓
+      </div>
+
+      <div class="stat-info">
+        <span>Devoluciones aprobadas</span>
+        <strong>{{ devolucionesAprobadas }}</strong>
+      </div>
+    </article>
+
+
+    <article class="stat-card">
+      <div class="stat-icon yellow">
+        ⏱
+      </div>
+
+      <div class="stat-info">
+        <span>En revisión</span>
+        <strong>{{ devolucionesEnRevision }}</strong>
+      </div>
+    </article>
+
+  </div>
+
+
+  <!-- COMPRAS RECIENTES -->
+
+  <div class="section-heading">
+
+    <div>
+      <h2>Mis compras recientes</h2>
+
+      <p>
+        Consulta tus últimas compras realizadas.
+      </p>
+    </div>
+
+    <a
+      routerLink="/cliente/compras"
+      class="view-all">
+      Ver todas →
+    </a>
+
+  </div>
+
+
+  @if (comprasRecientes.length === 0) {
+
+    <div class="empty-card">
+
+      <div class="empty-icon">
+        🛒
+      </div>
+
+      <h3>No tienes compras registradas</h3>
+
+      <p>
+        Cuando existan compras asociadas a tu cuenta,
+        aparecerán aquí.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <!-- ========================= -->
+    <!-- VERSIÓN PC: TABLA ORIGINAL -->
+    <!-- ========================= -->
+
+    <div class="purchases-desktop">
+
+      <div class="table-card">
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>N° Compra</th>
+                <th>Fecha</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                compra of comprasRecientes;
+                track compra.id
+              ) {
+
+                <tr>
+
+                  <td class="purchase-id">
+                    #{{ compra.id }}
+                  </td>
+
+                  <td>
+                    {{ formatearFecha(compra.fecha) }}
+                  </td>
+
+                  <td>
+                    {{ cantidadProductos(compra) }}
+                    {{
+                      cantidadProductos(compra) === 1
+                        ? 'producto'
+                        : 'productos'
+                    }}
+                  </td>
+
+                  <td class="amount">
+                    S/ {{ compra.total | number:'1.2-2' }}
+                  </td>
+
+                  <td>
+                    <span
+                      class="status"
+                      [class]="claseEstado(compra.estado)">
+                      {{ formatearEstado(compra.estado) }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <a
+                      [routerLink]="[
+                        '/cliente/compras',
+                        compra.id
+                      ]"
+                      class="detail-button">
+                      Ver detalles
+                    </a>
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- VERSIÓN RESPONSIVE: TARJETAS -->
+    <!-- ========================= -->
+
+    <div class="purchases-mobile">
+
+      @for (
+        compra of comprasRecientes;
+        track compra.id
+      ) {
+
+        <article class="purchase-card">
+
+          <div class="purchase-top">
+
+            <div class="purchase-number">
+
+              <span class="purchase-label">
+                Compra
+              </span>
+
+              <strong class="purchase-id">
+                #{{ compra.id }}
+              </strong>
+
+            </div>
+
+            <span
+              class="status"
+              [class]="claseEstado(compra.estado)">
+              {{ formatearEstado(compra.estado) }}
+            </span>
+
+          </div>
+
+
+          <div class="purchase-info">
+
+            <div class="info-item">
+
+              <span class="info-label">
+                Fecha
+              </span>
+
+              <span class="info-value">
+                {{ formatearFecha(compra.fecha) }}
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="info-label">
+                Productos
+              </span>
+
+              <span class="info-value">
+
+                {{ cantidadProductos(compra) }}
+
+                {{
+                  cantidadProductos(compra) === 1
+                    ? 'producto'
+                    : 'productos'
+                }}
+
+              </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span class="info-label">
+                Total
+              </span>
+
+              <strong class="amount">
+                S/ {{ compra.total | number:'1.2-2' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="purchase-bottom">
+
+            <a
+              [routerLink]="[
+                '/cliente/compras',
+                compra.id
+              ]"
+              class="detail-button">
+              Ver detalles
+            </a>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+</section>
+

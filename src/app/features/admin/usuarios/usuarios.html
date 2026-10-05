@@ -1,0 +1,208 @@
+<section class="page">
+
+  <header class="page-header">
+
+    <div>
+
+      <p class="eyebrow">
+        Administración
+      </p>
+
+      <h1>
+        Usuarios
+      </h1>
+
+      <p class="subtitle">
+        Consulta los usuarios registrados en el sistema.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="btn-refresh"
+      (click)="cargarUsuarios()"
+      [disabled]="cargando"
+    >
+
+      <span class="refresh-icon">
+        ↻
+      </span>
+
+      Actualizar
+
+    </button>
+
+  </header>
+
+
+  @if (error) {
+
+    <div class="alert-error">
+
+      <strong>
+        Ocurrió un problema
+      </strong>
+
+      <span>
+        {{ error }}
+      </span>
+
+    </div>
+
+  }
+
+
+  @if (cargando) {
+
+    <div class="state-container">
+
+      <div class="spinner"></div>
+
+      <p>
+        Cargando usuarios...
+      </p>
+
+    </div>
+
+  } @else if (usuarios.length === 0) {
+
+    <div class="state-container empty">
+
+      <div class="empty-icon">
+        ◉
+      </div>
+
+      <h2>
+        No hay usuarios
+      </h2>
+
+      <p>
+        No se encontraron usuarios registrados.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <section class="table-container">
+
+      <div class="table-header">
+
+        <div>
+
+          <h2>
+            Usuarios registrados
+          </h2>
+
+          <span class="count">
+
+            {{ usuarios.length }}
+
+            {{
+              usuarios.length === 1
+                ? 'usuario'
+                : 'usuarios'
+            }}
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                ID
+              </th>
+
+              <th>
+                Nombre
+              </th>
+
+              <th>
+                Correo electrónico
+              </th>
+
+              <th>
+                Rol
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              usuario of usuarios;
+              track trackById($index, usuario)
+            ) {
+
+              <tr>
+
+                <td>
+
+                  <span class="user-id">
+                    #{{ usuario.id }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span class="user-name">
+                    {{ usuario.nombre }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span class="user-email">
+                    {{ usuario.email }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span
+                    class="role"
+                    [ngClass]="rolClase(usuario.rol)"
+                  >
+
+                    {{ rolTexto(usuario.rol) }}
+
+                  </span>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  }
+
+</section>

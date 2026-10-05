@@ -1,0 +1,254 @@
+<section class="page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Inicio</h1>
+      <p>Resumen de las solicitudes de devolución.</p>
+    </div>
+
+    <a
+      routerLink="/operador/devoluciones"
+      class="primary-button">
+      Ver devoluciones
+    </a>
+
+  </div>
+
+
+  <div class="summary">
+
+    <div class="summary-item">
+      <span class="label">Solicitadas</span>
+      <strong>{{ totalSolicitadas }}</strong>
+    </div>
+
+    <div class="summary-item">
+      <span class="label">En revisión</span>
+      <strong>{{ totalEnRevision }}</strong>
+    </div>
+
+    <div class="summary-item">
+      <span class="label">Aprobadas</span>
+      <strong>{{ totalAprobadas }}</strong>
+    </div>
+
+    <div class="summary-item">
+      <span class="label">Rechazadas</span>
+      <strong>{{ totalRechazadas }}</strong>
+    </div>
+
+    <div class="summary-item">
+      <span class="label">Completadas</span>
+      <strong>{{ totalCompletadas }}</strong>
+    </div>
+
+  </div>
+
+
+  <!-- FILTROS -->
+
+  <div class="filters">
+
+    <div class="filter-group">
+
+      <label for="estado">
+        Estado
+      </label>
+
+      <select
+        id="estado"
+        [(ngModel)]="filtroEstado">
+
+        <option value="">
+          Todos
+        </option>
+
+        <option value="SOLICITADA">
+          Solicitada
+        </option>
+
+        <option value="EN_REVISION">
+          En revisión
+        </option>
+
+        <option value="APROBADA">
+          Aprobada
+        </option>
+
+        <option value="RECHAZADA">
+          Rechazada
+        </option>
+
+        <option value="COMPLETADA">
+          Completada
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="filter-group">
+
+      <label for="fechaDesde">
+        Fecha desde
+      </label>
+
+      <input
+        id="fechaDesde"
+        type="date"
+        [(ngModel)]="fechaDesde">
+
+    </div>
+
+
+    <div class="filter-group">
+
+      <label for="fechaHasta">
+        Fecha hasta
+      </label>
+
+      <input
+        id="fechaHasta"
+        type="date"
+        [(ngModel)]="fechaHasta">
+
+    </div>
+
+
+    <button
+      type="button"
+      class="search-button"
+      (click)="buscar()"
+      [disabled]="cargando">
+
+      Buscar
+
+    </button>
+
+  </div>
+
+
+  @if (cargando) {
+
+    <div class="message">
+      Cargando devoluciones...
+    </div>
+
+  } @else if (error) {
+
+    <div class="message error">
+      {{ error }}
+    </div>
+
+  } @else {
+
+    <section class="recent-section">
+
+      <div class="section-header">
+
+        <div>
+          <h2>Últimas devoluciones</h2>
+          <p>Solicitudes registradas recientemente.</p>
+        </div>
+
+      </div>
+
+
+      @if (devoluciones.length === 0) {
+
+        <div class="message">
+          No hay devoluciones registradas.
+        </div>
+
+      } @else {
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>N° Solicitud</th>
+                <th>Fecha</th>
+                <th>Motivo</th>
+                <th>Importe</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              @for (
+                devolucion of devoluciones.slice(0, 4);
+                track devolucion.id
+              ) {
+
+                <tr>
+
+                  <td class="request-number">
+                    #D-{{ devolucion.id }}
+                  </td>
+
+                  <td>
+                    {{ formatearFecha(devolucion.fechaSolicitud) }}
+                  </td>
+
+                  <td>
+                    {{ devolucion.motivo }}
+                  </td>
+
+                  <td class="amount">
+                    S/ {{ devolucion.importe | number:'1.2-2' }}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="status"
+                      [class.solicitada]="devolucion.estado === 'SOLICITADA'"
+                      [class.en-revision]="devolucion.estado === 'EN_REVISION'"
+                      [class.aprobada]="devolucion.estado === 'APROBADA'"
+                      [class.rechazada]="devolucion.estado === 'RECHAZADA'"
+                      [class.completada]="devolucion.estado === 'COMPLETADA'">
+
+                      {{ estadoTexto(devolucion.estado) }}
+
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <a
+                      [routerLink]="[
+                        '/operador/detalle-devolucion',
+                        devolucion.id
+                      ]"
+                      class="detail-link">
+
+                      Ver
+
+                    </a>
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+    </section>
+
+  }
+
+</section>

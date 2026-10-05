@@ -1,0 +1,252 @@
+<button
+  class="menu-toggle"
+  type="button"
+  (click)="toggleMenu()"
+  [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'">
+
+  <span>{{ menuAbierto ? '✕' : '☰' }}</span>
+
+</button>
+
+@if (menuAbierto) {
+  <div
+    class="sidebar-overlay"
+    (click)="cerrarMenu()">
+  </div>
+}
+
+<aside
+  class="sidebar"
+  [class.open]="menuAbierto">
+
+  <div class="brand">
+
+    <div class="brand-icon">S</div>
+
+    <div>
+      <div class="brand-name">
+        Soft<span>Devoluciones</span>
+      </div>
+
+      <div class="brand-subtitle">
+        Gestión de devoluciones
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="navigation">
+
+    @if (rol === 'CLIENTE') {
+
+      <a
+        routerLink="/cliente/inicio"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/inicio.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Inicio</span>
+
+      </a>
+
+      <a
+        routerLink="/cliente/compras"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/carrito.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Mis compras</span>
+
+      </a>
+
+      <a
+        routerLink="/cliente/devoluciones"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/devolucion.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Mis devoluciones</span>
+
+      </a>
+
+      <a
+        routerLink="/cliente/perfil"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/perfil.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Mi perfil</span>
+
+      </a>
+
+    }
+
+    @if (rol === 'OPERADOR') {
+
+      <a
+        routerLink="/operador/inicio"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/inicio.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Inicio</span>
+
+      </a>
+
+      <a
+        routerLink="/operador/devoluciones"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/devolucion.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Devoluciones</span>
+
+      </a>
+
+      <a
+        routerLink="/operador/perfil"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/perfil.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Mi perfil</span>
+
+      </a>
+
+    }
+
+    @if (rol === 'ADMIN') {
+
+      <a
+        routerLink="/admin/inicio"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/inicio.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Inicio</span>
+
+      </a>
+
+      <a
+        routerLink="/admin/devoluciones"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/devolucion.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Devoluciones</span>
+
+      </a>
+
+      <a
+        routerLink="/admin/compras"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/carrito.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Compras</span>
+
+      </a>
+
+      <a
+        routerLink="/admin/usuarios"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/usuarios.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Usuarios</span>
+
+      </a>
+
+      <a
+        routerLink="/admin/perfil"
+        routerLinkActive="active"
+        class="nav-item"
+        (click)="cerrarMenu()">
+
+        <img
+          src="assets/icons/perfil.png"
+          alt=""
+          class="nav-icon">
+
+        <span>Mi perfil</span>
+
+      </a>
+
+    }
+
+  </nav>
+
+  <div class="sidebar-bottom">
+
+    <button
+      class="logout-button"
+      (click)="logout()"
+      type="button">
+
+      <span class="icon icon-logout"></span>
+
+      <span>Salir</span>
+
+    </button>
+
+  </div>
+
+</aside>

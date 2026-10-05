@@ -1,0 +1,224 @@
+<section class="page">
+
+  <header class="page-header">
+
+    <div>
+      <p class="eyebrow">Administración</p>
+
+      <h1>Compras</h1>
+
+      <p class="subtitle">
+        Consulta las compras realizadas y gestiona sus entregas.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn-refresh"
+      (click)="cargarCompras()"
+      [disabled]="cargando"
+    >
+      <span class="refresh-icon">↻</span>
+      Actualizar
+    </button>
+
+  </header>
+
+
+  @if (error) {
+
+    <div class="alert-error">
+      <strong>Ocurrió un problema</strong>
+      <span>{{ error }}</span>
+    </div>
+
+  }
+
+
+  @if (cargando) {
+
+    <div class="state-container">
+
+      <div class="spinner"></div>
+
+      <p>Cargando compras...</p>
+
+    </div>
+
+  } @else if (compras.length === 0) {
+
+    <div class="state-container empty">
+
+      <div class="empty-icon">▤</div>
+
+      <h2>No hay compras</h2>
+
+      <p>
+        No se encontraron compras registradas.
+      </p>
+
+    </div>
+
+  } @else {
+
+    <section class="table-container">
+
+      <div class="table-header">
+
+        <div>
+          <h2>Listado de compras</h2>
+
+          <span class="count">
+            {{ compras.length }}
+            {{ compras.length === 1 ? 'compra' : 'compras' }}
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Compra</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Estado</th>
+              <th class="action-column">Acción</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              compra of compras;
+              track trackById($index, compra)
+            ) {
+
+              <tr>
+
+                <td>
+                  <span class="purchase-number">
+                    #{{ compra.id }}
+                  </span>
+                </td>
+
+
+                <td>
+                  <div class="client">
+
+                    <span class="client-name">
+                      {{ nombreCliente(compra) }}
+                    </span>
+
+                    @if (compra.usuarioId) {
+                      <span class="client-id">
+                        Usuario #{{ compra.usuarioId }}
+                      </span>
+                    }
+
+                  </div>
+                </td>
+
+
+                <td>
+
+                  <div class="date">
+
+                    <span>
+                      {{ formatearFecha(compra.fecha) }}
+                    </span>
+
+                    <small>
+                      {{ formatearHora(compra.fecha) }}
+                    </small>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <span class="total">
+                    {{ formatearMoneda(compra.total) }}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <span
+                    class="status"
+                    [class.status-transito]="
+                      compra.estado === 'EN_TRANSITO'
+                    "
+                    [class.status-entregado]="
+                      compra.estado === 'ENTREGADO'
+                    "
+                  >
+                    <span class="status-dot"></span>
+
+                    {{ estadoTexto(compra.estado) }}
+                  </span>
+
+                </td>
+
+
+                <td class="actions">
+
+                  @if (compra.estado === 'EN_TRANSITO') {
+
+                    <button
+                      type="button"
+                      class="btn-deliver"
+                      (click)="marcarComoEntregada(compra)"
+                      [disabled]="procesandoId === compra.id"
+                    >
+
+                      @if (procesandoId === compra.id) {
+
+                        <span class="button-spinner"></span>
+                        Procesando...
+
+                      } @else {
+
+                        Marcar como entregada
+
+                      }
+
+                    </button>
+
+                  } @else {
+
+                    <span class="completed-label">
+                      Entrega registrada
+                    </span>
+
+                  }
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  }
+
+</section>

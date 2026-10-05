@@ -1,0 +1,257 @@
+
+<div class="detalle-page">
+
+  @if (loading) {
+
+    <div class="estado-pagina">
+      <span class="spinner"></span>
+      <span>Cargando solicitud...</span>
+    </div>
+
+  } @else if (error) {
+
+    <div class="estado-pagina error">
+      {{ error }}
+    </div>
+
+  } @else if (devolucion) {
+
+    <a
+      routerLink="/operador/devoluciones"
+      class="volver">
+      <span>←</span>
+      Volver a devoluciones
+    </a>
+
+
+    <!-- CABECERA -->
+
+    <header class="cabecera">
+
+      <div class="cabecera-titulo">
+
+        <span class="etiqueta">
+          SOLICITUD DE DEVOLUCIÓN
+        </span>
+
+        <h1>
+          #D-{{ devolucion.id }}
+        </h1>
+
+      </div>
+
+      <span
+        class="estado"
+        [ngClass]="claseEstado(devolucion.estado)">
+        {{ estadoTexto(devolucion.estado) }}
+      </span>
+
+    </header>
+
+
+    <!-- DATOS PRINCIPALES -->
+
+    <section class="datos-principales">
+
+      <div class="dato">
+
+        <span class="dato-label">
+          Cliente
+        </span>
+
+        <span class="dato-valor">
+          {{ devolucion.nombreCliente || 'Cliente' }}
+        </span>
+
+      </div>
+
+
+      <div class="dato">
+
+        <span class="dato-label">
+          Compra
+        </span>
+
+        <span class="dato-valor">
+          #{{ devolucion.compraId }}
+        </span>
+
+      </div>
+
+
+      <div class="dato">
+
+        <span class="dato-label">
+          Solicitada el
+        </span>
+
+        <span class="dato-valor">
+          {{ formatearFechaHora(devolucion.fechaSolicitud) }}
+        </span>
+
+      </div>
+
+
+      <div class="dato">
+
+        <span class="dato-label">
+          Importe
+        </span>
+
+        <span class="dato-valor importe">
+          S/ {{ devolucion.importe | number:'1.2-2' }}
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRODUCTO -->
+
+    <section class="seccion producto-seccion">
+
+      <h2>
+        PRODUCTO SOLICITADO
+      </h2>
+
+      @if (devolucion.detalles?.length) {
+
+        <div class="producto">
+
+          <div class="producto-imagen">
+
+            @if (devolucion.detalles[0].imagenUrl) {
+
+              <img
+                [src]="urlImagen(devolucion.detalles[0].imagenUrl)"
+                [alt]="devolucion.detalles[0].productoNombre || 'Producto'">
+
+            } @else {
+
+              <span class="imagen-placeholder">
+                {{
+                  (devolucion.detalles[0].productoNombre || 'P')
+                    .charAt(0)
+                    .toUpperCase()
+                }}
+              </span>
+
+            }
+
+          </div>
+
+
+          <div class="producto-info">
+
+            <span class="producto-nombre">
+              {{ devolucion.detalles[0].productoNombre || 'Producto' }}
+            </span>
+
+            @if (devolucion.detalles[0].productoId) {
+
+              <span class="producto-id">
+                Producto #{{ devolucion.detalles[0].productoId }}
+              </span>
+
+            }
+
+          </div>
+
+
+          <div class="producto-cantidad">
+
+            <span class="dato-label">
+              Cantidad
+            </span>
+
+            <span class="dato-valor">
+              {{ devolucion.detalles[0].cantidad }}
+            </span>
+
+          </div>
+
+
+          <div class="producto-importe">
+
+            <span class="dato-label">
+              Importe
+            </span>
+
+            <span class="dato-valor importe">
+              S/ {{ devolucion.detalles[0].importe | number:'1.2-2' }}
+            </span>
+
+          </div>
+
+        </div>
+
+      } @else {
+
+        <p class="sin-producto">
+          No hay información del producto.
+        </p>
+
+      }
+
+    </section>
+
+
+    <!-- MOTIVO Y MENSAJE -->
+
+    <section class="contenido-dos-columnas">
+
+      <div class="seccion texto-seccion">
+
+        <h2>
+          MOTIVO
+        </h2>
+
+        <p>
+          {{ devolucion.motivo }}
+        </p>
+
+      </div>
+
+
+      @if (devolucion.comentario) {
+
+        <div class="seccion texto-seccion">
+
+          <h2>
+            MENSAJE DEL CLIENTE
+          </h2>
+
+          <p>
+            {{ devolucion.comentario }}
+          </p>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- OBSERVACIÓN -->
+
+    @if (devolucion.observacionOperador) {
+
+      <section class="seccion observacion-seccion">
+
+        <h2>
+          OBSERVACIÓN DEL OPERADOR
+        </h2>
+
+        <p>
+          {{ devolucion.observacionOperador }}
+        </p>
+
+      </section>
+
+    }
+
+  }
+
+</div>
+

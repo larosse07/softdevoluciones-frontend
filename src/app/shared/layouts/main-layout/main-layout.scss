@@ -1,0 +1,51 @@
+﻿:host {
+  display: block;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f7f8;
+}
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+  margin-left: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+// La topbar (buscador, usuario) conserva su altura real
+.main-area > :first-child:not(.content) {
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;               // ocupa justo el espacio restante bajo la topbar
+  min-width: 0;
+  padding: 28px 34px;
+  // El alto crece solo si el contenido no cabe: ahí aparece el scroll.
+  // Si cabe, no hay scroll.
+}
+
+@media (max-width: 900px) {
+  .main-area {
+    margin-left: 0;
+  }
+
+  .content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 650px) {
+  .content {
+    padding: 20px 16px;
+  }
+}

@@ -1,0 +1,51 @@
+﻿<header class="header">
+
+  <div class="search">
+
+    <span class="search-icon">⌕</span>
+
+    <input
+      type="text"
+      placeholder="Buscar..."
+      aria-label="Buscar">
+
+  </div>
+
+
+  <div class="header-right">
+
+    <button
+      class="notification"
+      type="button"
+      aria-label="Notificaciones">
+
+      <span>♧</span>
+      <i></i>
+
+    </button>
+
+
+    <div class="user">
+
+      <div class="avatar">
+        {{ authService.getNombre().charAt(0).toUpperCase() || 'U' }}
+      </div>
+
+
+      <div class="user-info">
+
+        <strong>
+          {{ authService.getNombre() || 'Usuario' }}
+        </strong>
+
+        <span>
+          {{ authService.getRol() || 'Usuario' }}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
