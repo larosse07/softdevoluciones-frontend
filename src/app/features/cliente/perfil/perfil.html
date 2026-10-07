@@ -1,1 +1,86 @@
-<p>perfil works!</p>
+<div class="perfil-page">
+
+  <div class="page-header">
+    <h1>Mi perfil</h1>
+    <p>Información de la cuenta de usuario.</p>
+  </div>
+
+  @if (sesion) {
+
+    <section class="perfil-contenido">
+
+      <div class="perfil-identidad">
+
+        <div class="avatar">
+          {{ sesion.nombre.charAt(0).toUpperCase() }}
+        </div>
+
+        <div>
+          <h2>{{ sesion.nombre }}</h2>
+          <span class="rol">
+            {{ nombreRol() }}
+          </span>
+        </div>
+
+      </div>
+
+      <div class="linea"></div>
+
+      <div class="datos">
+
+        <div class="dato">
+          <span>ID de usuario</span>
+          <strong>#{{ sesion.id }}</strong>
+        </div>
+
+        <div class="dato">
+          <span>Nombre</span>
+          <strong>{{ sesion.nombre }}</strong>
+        </div>
+
+        <div class="dato">
+          <span>Rol</span>
+          <strong>{{ nombreRol() }}</strong>
+        </div>
+
+        <div class="dato">
+          <span>Estado de sesión</span>
+          <strong class="estado">
+            Sesión activa
+          </strong>
+        </div>
+
+      </div>
+
+      <div class="linea"></div>
+
+      <div class="acciones">
+
+        <button
+          type="button"
+          class="btn-salir"
+          (click)="cerrarSesion()"
+        >
+          Cerrar sesión
+        </button>
+
+      </div>
+
+    </section>
+
+  } @else {
+
+    <section class="sin-sesion">
+      <p>No se encontró una sesión activa.</p>
+
+      <button
+        type="button"
+        (click)="cerrarSesion()"
+      >
+        Ir al login
+      </button>
+    </section>
+
+  }
+
+</div>

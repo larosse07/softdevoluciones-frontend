@@ -206,18 +206,28 @@
 
                   @if (compra.estado === 'ENTREGADA') {
 
-                    <button
-                      type="button"
-                      class="detail-button"
-                      (click)="
-                        solicitarDevolucion(
-                          detalle.productoId
-                        )
-                      ">
+                    @if (!tieneDevolucion(detalle)) {
 
-                      Solicitar devolución
+                      <button
+                        type="button"
+                        class="detail-button"
+                        (click)="
+                          solicitarDevolucion(
+                            detalle.productoId
+                          )
+                        ">
 
-                    </button>
+                        Solicitar devolución
+
+                      </button>
+
+                    } @else {
+
+                      <span class="no-return">
+                        Devolución solicitada
+                      </span>
+
+                    }
 
                   } @else {
 

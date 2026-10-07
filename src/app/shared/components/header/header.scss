@@ -1,50 +1,44 @@
-﻿.header {
+﻿/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
   height: 72px;
+
   background: #ffffff;
+
   border-bottom: 1px solid #e9e9eb;
 
   display: flex;
+
   align-items: center;
-  justify-content: space-between;
+
+  justify-content: flex-end;
 
   padding: 0 30px;
+
+  box-sizing: border-box;
 }
 
-.search {
-  width: 320px;
-  height: 40px;
 
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  background: #f7f7f8;
-  border: 1px solid #ededee;
-  border-radius: 8px;
-
-  padding: 0 12px;
-}
-
-.search-icon {
-  font-size: 21px;
-  color: #999;
-}
-
-.search input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: transparent;
-
-  font-family: inherit;
-  font-size: 13px;
-}
+/* =========================================================
+   PARTE DERECHA DEL HEADER
+   ========================================================= */
 
 .header-right {
   display: flex;
+
   align-items: center;
+
+  justify-content: flex-end;
+
   gap: 22px;
 }
+
+
+/* =========================================================
+   NOTIFICACIONES
+   ========================================================= */
 
 .notification {
   position: relative;
@@ -52,33 +46,103 @@
   width: 40px;
   height: 40px;
 
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   border: 0;
+
   background: transparent;
 
   color: #666;
+
   font-size: 21px;
 
   cursor: pointer;
+
+  padding: 0;
+
+  border-radius: 8px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
+
+.notification:hover {
+  background: #f7f7f8;
+
+  color: #333;
+}
+
+.notification span {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   PUNTO DE NOTIFICACIÓN
+   ========================================================= */
 
 .notification i {
   position: absolute;
-  right: 7px;
-  top: 7px;
+
+  right: 6px;
+  top: 6px;
 
   width: 7px;
   height: 7px;
 
   background: #f58220;
-  border: 2px solid white;
+
+  border: 2px solid #ffffff;
+
   border-radius: 50%;
+
+  box-sizing: content-box;
 }
+
+
+/* =========================================================
+   USUARIO
+   TODO EL BLOQUE ES CLICKEABLE
+   ========================================================= */
 
 .user {
   display: flex;
+
   align-items: center;
+
   gap: 10px;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  padding: 6px 8px;
+
+  margin: -6px -8px;
+
+  border-radius: 10px;
+
+  transition:
+    background 0.2s ease;
 }
+
+.user:hover {
+  background: #f7f7f8;
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
 
 .avatar {
   width: 38px;
@@ -87,42 +151,108 @@
   border-radius: 50%;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   background: #fff0e4;
+
   color: #f58220;
 
   font-size: 15px;
+
   font-weight: 800;
+
+  flex-shrink: 0;
 }
+
+
+/* =========================================================
+   INFORMACIÓN DEL USUARIO
+   ========================================================= */
 
 .user-info {
   display: flex;
+
   flex-direction: column;
+
+  justify-content: center;
+
   gap: 2px;
 }
 
 .user-info strong {
   font-size: 13px;
-  color: #333;
+
+  color: #333333;
+
+  font-weight: 600;
+
+  line-height: 1.2;
 }
 
 .user-info span {
   font-size: 11px;
-  color: #999;
+
+  color: #999999;
+
+  line-height: 1.2;
 }
 
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
 @media (max-width: 700px) {
+
   .header {
     padding: 0 18px;
   }
 
-  .search {
-    width: 180px;
+  .header-right {
+    gap: 12px;
   }
 
   .user-info {
     display: none;
+  }
+
+  .user {
+    padding: 4px;
+
+    margin: -4px;
+  }
+}
+
+
+/* =========================================================
+   CELULARES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .header {
+    padding: 0 12px;
+  }
+
+  .header-right {
+    gap: 8px;
+  }
+
+  .notification {
+    width: 36px;
+    height: 36px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .user {
+    padding: 3px;
+
+    margin: -3px;
   }
 }

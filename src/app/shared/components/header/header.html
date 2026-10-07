@@ -1,19 +1,8 @@
 ﻿<header class="header">
 
-  <div class="search">
-
-    <span class="search-icon">⌕</span>
-
-    <input
-      type="text"
-      placeholder="Buscar..."
-      aria-label="Buscar">
-
-  </div>
-
-
   <div class="header-right">
 
+    <!-- NOTIFICACIONES -->
     <button
       class="notification"
       type="button"
@@ -25,12 +14,15 @@
     </button>
 
 
-    <div class="user">
+    <!-- USUARIO COMPLETO: TODO ES CLICKEABLE -->
+    <a
+      class="user"
+      routerLink="/cliente/perfil"
+      aria-label="Ir a mi perfil">
 
       <div class="avatar">
         {{ authService.getNombre().charAt(0).toUpperCase() || 'U' }}
       </div>
-
 
       <div class="user-info">
 
@@ -44,7 +36,7 @@
 
       </div>
 
-    </div>
+    </a>
 
   </div>
 

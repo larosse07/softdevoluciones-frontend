@@ -16,6 +16,7 @@ import {
 import { FormsModule } from '@angular/forms';
 
 import { ComprasService } from '../../../core/services/compras';
+import { DevolucionesService } from '../../../core/services/devoluciones';
 import { Compra, DetalleCompra } from '../../../core/models/compra.model';
 
 @Component({
@@ -40,6 +41,9 @@ export class NuevaDevolucion implements OnInit {
   private readonly comprasService =
     inject(ComprasService);
 
+  private readonly devolucionesService =
+    inject(DevolucionesService);
+
   private readonly changeDetector =
     inject(ChangeDetectorRef);
 
@@ -52,6 +56,7 @@ export class NuevaDevolucion implements OnInit {
   descripcion = '';
 
   loading = true;
+  enviando = false;
   error = '';
 
   ngOnInit(): void {
@@ -168,7 +173,153 @@ export class NuevaDevolucion implements OnInit {
 
   enviarSolicitud(): void {
 
-    // Aquí conectaremos el POST al backend
-    // en el siguiente paso.
+    // Evitar envíos duplicados
+    if (this.enviando) {
+      return;
+    }
+
+    this.error = '';
+
+    // Validar compra
+    if (!this.compra) {
+
+      this.error =
+        'No se encontró la compra.';
+
+      return;
+    }
+
+    // Validar producto
+    if (!this.producto) {
+
+      this.error =
+        'No se encontró el producto seleccionado.';
+
+      return;
+    }
+
+    // Validar cantidad
+    const cantidadSolicitada =
+      Number(this.cantidad);
+
+    if (
+      !Number.isInteger(cantidadSolicitada) ||
+      cantidadSolicitada < 1
+    ) {
+
+      this.error =
+        'La cantidad a devolver debe ser válida.';
+
+      return;
+    }
+
+    if (
+      cantidadSolicitada >
+      this.cantidadMaxima()
+    ) {
+
+      this.error =
+        `La cantidad máxima para devolver es ${this.cantidadMaxima()}.`;
+
+      return;
+    }
+
+    // Validar motivo
+    if (!this.motivo) {
+
+      this.error =
+        'Selecciona un motivo de devolución.';
+
+      return;
+    }
+
+    /*
+     * El backend espera:
+     *
+     * compraId
+     * motivo
+     * comentario
+     * detalles[]
+     *
+     * Y cada detalle necesita:
+     * detalleCompraId
+     * cantidad
+     */
+    const request = {
+      compraId: this.compra.id,
+
+      motivo: this.motivo,
+
+      comentario:
+        this.descripcion.trim() || undefined,
+
+      detalles: [
+        {
+          detalleCompraId: this.producto.id,
+          cantidad: cantidadSolicitada
+        }
+      ]
+    };
+
+    console.log(
+      'SOLICITUD DE DEVOLUCIÓN:',
+      request
+    );
+
+    this.enviando = true;
+
+    this.devolucionesService
+      .crearDevolucion(request)
+      .subscribe({
+
+        next: (devolucion) => {
+
+          console.log(
+            'DEVOLUCIÓN CREADA:',
+            devolucion
+          );
+
+          this.enviando = false;
+
+          /*
+           * El backend debe crearla inicialmente
+           * con estado SOLICITADA.
+           *
+           * Después volvemos al detalle de la compra.
+           */
+          this.router.navigate([
+            '/cliente/compras',
+            this.compra!.id
+          ]);
+        },
+
+        error: (error) => {
+
+          console.error(
+            'ERROR CREANDO DEVOLUCIÓN:',
+            error
+          );
+
+          this.enviando = false;
+
+          if (error?.error?.message) {
+
+            this.error =
+              error.error.message;
+
+          } else if (error?.error?.error) {
+
+            this.error =
+              error.error.error;
+
+          } else {
+
+            this.error =
+              'No se pudo enviar la solicitud de devolución. Inténtalo nuevamente.';
+          }
+
+          this.changeDetector.detectChanges();
+        }
+      });
   }
 }

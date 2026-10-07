@@ -36,7 +36,16 @@ export class Inicio implements OnInit {
     inject(ChangeDetectorRef);
 
 
+  // =========================================================
+  // DEVOLUCIONES
+  // =========================================================
+
   devoluciones: Devolucion[] = [];
+
+
+  // =========================================================
+  // CONTADORES
+  // =========================================================
 
   totalSolicitadas = 0;
   totalEnRevision = 0;
@@ -44,11 +53,18 @@ export class Inicio implements OnInit {
   totalRechazadas = 0;
   totalCompletadas = 0;
 
+
+  // =========================================================
+  // ESTADO
+  // =========================================================
+
   cargando = true;
   error = '';
 
 
+  // =========================================================
   // FILTROS
+  // =========================================================
 
   filtroEstado: EstadoDevolucion | '' = '';
 
@@ -56,6 +72,17 @@ export class Inicio implements OnInit {
 
   fechaHasta = '';
 
+
+  // =========================================================
+  // FILTROS RESPONSIVE
+  // =========================================================
+
+  filtrosAbiertos = false;
+
+
+  // =========================================================
+  // INICIO
+  // =========================================================
 
   ngOnInit(): void {
 
@@ -66,94 +93,175 @@ export class Inicio implements OnInit {
     this.buscar();
   }
 
-buscar(): void {
 
-  this.cargando = true;
-  this.error = '';
+  // =========================================================
+  // BUSCAR / FILTRAR
+  // =========================================================
 
-  const estado =
-    this.filtroEstado || undefined;
+  buscar(): void {
 
-  let fechaInicio: string | undefined;
-  let fechaFin: string | undefined;
+    this.cargando = true;
+    this.error = '';
 
-  if (this.fechaDesde) {
-    fechaInicio = `${this.fechaDesde}T00:00:00`;
-  }
+    const estado =
+      this.filtroEstado || undefined;
 
-  if (this.fechaHasta) {
-    fechaFin = `${this.fechaHasta}T23:59:59`;
-  }
+    let fechaInicio: string | undefined;
+    let fechaFin: string | undefined;
 
-  console.log('FILTRO ESTADO:', estado);
-  console.log('FECHA DESDE:', fechaInicio);
-  console.log('FECHA HASTA:', fechaFin);
 
-  this.devolucionesService.listarAdmin(
-    estado,
-    undefined,
-    fechaInicio,
-    fechaFin,
-    0,
-    100
-  ).subscribe({
+    // ---------------------------------------------------------
+    // FECHA DESDE
+    // ---------------------------------------------------------
 
-    next: (respuesta) => {
+    if (this.fechaDesde) {
 
-      console.log('RESPUESTA FILTRADA:', respuesta);
+      fechaInicio =
+        `${this.fechaDesde}T00:00:00`;
 
-      this.devoluciones =
-        respuesta.content ?? [];
-
-      this.actualizarContadores();
-
-      this.cargando = false;
-
-      this.changeDetector.detectChanges();
-    },
-
-    error: (error) => {
-
-      console.error('ERROR AL FILTRAR:', error);
-
-      this.devoluciones = [];
-
-      this.totalSolicitadas = 0;
-      this.totalEnRevision = 0;
-      this.totalAprobadas = 0;
-      this.totalRechazadas = 0;
-      this.totalCompletadas = 0;
-
-      this.error =
-        error?.error?.message ||
-        'No se pudieron filtrar las devoluciones.';
-
-      this.cargando = false;
-
-      this.changeDetector.detectChanges();
     }
 
-  });
-}
+
+    // ---------------------------------------------------------
+    // FECHA HASTA
+    // ---------------------------------------------------------
+
+    if (this.fechaHasta) {
+
+      fechaFin =
+        `${this.fechaHasta}T23:59:59`;
+
+    }
+
+
+    console.log(
+      'FILTRO ESTADO:',
+      estado
+    );
+
+    console.log(
+      'FECHA DESDE:',
+      fechaInicio
+    );
+
+    console.log(
+      'FECHA HASTA:',
+      fechaFin
+    );
+
+
+    // ---------------------------------------------------------
+    // PETICIÓN AL BACKEND
+    // ---------------------------------------------------------
+
+    this.devolucionesService
+      .listarAdmin(
+        estado,
+        undefined,
+        fechaInicio,
+        fechaFin,
+        0,
+        100
+      )
+      .subscribe({
+
+        // =====================================================
+        // ÉXITO
+        // =====================================================
+
+        next: (respuesta) => {
+
+          console.log(
+            'RESPUESTA FILTRADA:',
+            respuesta
+          );
+
+
+          this.devoluciones =
+            respuesta.content ?? [];
+
+
+          this.actualizarContadores();
+
+
+          this.cargando = false;
+
+
+          this.changeDetector.detectChanges();
+
+        },
+
+
+        // =====================================================
+        // ERROR
+        // =====================================================
+
+        error: (error) => {
+
+          console.error(
+            'ERROR AL FILTRAR:',
+            error
+          );
+
+
+          this.devoluciones = [];
+
+
+          this.totalSolicitadas = 0;
+          this.totalEnRevision = 0;
+          this.totalAprobadas = 0;
+          this.totalRechazadas = 0;
+          this.totalCompletadas = 0;
+
+
+          this.error =
+            error?.error?.message ||
+            'No se pudieron filtrar las devoluciones.';
+
+
+          this.cargando = false;
+
+
+          this.changeDetector.detectChanges();
+
+        }
+
+      });
+
+  }
+
+
+  // =========================================================
+  // ACTUALIZAR CONTADORES
+  // =========================================================
+
   private actualizarContadores(): void {
 
     this.totalSolicitadas =
       this.contarEstado('SOLICITADA');
 
+
     this.totalEnRevision =
       this.contarEstado('EN_REVISION');
+
 
     this.totalAprobadas =
       this.contarEstado('APROBADA');
 
+
     this.totalRechazadas =
       this.contarEstado('RECHAZADA');
+
 
     this.totalCompletadas =
       this.contarEstado('COMPLETADA');
 
   }
 
+
+  // =========================================================
+  // CONTAR POR ESTADO
+  // =========================================================
 
   private contarEstado(
     estado: EstadoDevolucion
@@ -166,6 +274,10 @@ buscar(): void {
 
   }
 
+
+  // =========================================================
+  // TEXTO DEL ESTADO
+  // =========================================================
 
   estadoTexto(
     estado: EstadoDevolucion
@@ -195,6 +307,10 @@ buscar(): void {
 
   }
 
+
+  // =========================================================
+  // FORMATEAR FECHA
+  // =========================================================
 
   formatearFecha(
     fecha: string

@@ -1,4 +1,6 @@
-/* ===== PÁGINA ===== */
+/* =========================================================
+   PÁGINA
+   ========================================================= */
 
 .page {
   padding: 24px 32px;
@@ -9,7 +11,9 @@
 }
 
 
-/* ===== CABECERA ===== */
+/* =========================================================
+   CABECERA
+   ========================================================= */
 
 .page-heading h1 {
   margin: 0 0 4px;
@@ -25,7 +29,9 @@
 }
 
 
-/* ===== TABLA ===== */
+/* =========================================================
+   TABLA
+   ========================================================= */
 
 .table-card {
   background: #fff;
@@ -38,6 +44,11 @@
 .table-scroll {
   overflow-x: auto;
 }
+
+
+/* =========================================================
+   FILAS
+   ========================================================= */
 
 .table-row {
   display: grid;
@@ -52,7 +63,6 @@
     0.9fr;
 
   align-items: center;
-
   column-gap: 14px;
 
   min-width: 900px;
@@ -69,7 +79,9 @@
 }
 
 
-/* ===== CABECERA TABLA ===== */
+/* =========================================================
+   CABECERA DE TABLA - PC
+   ========================================================= */
 
 .table-head {
   padding: 14px 24px;
@@ -87,7 +99,9 @@
 }
 
 
-/* ===== COLUMNAS ===== */
+/* =========================================================
+   COLUMNAS
+   ========================================================= */
 
 .col-id,
 .col-total {
@@ -107,6 +121,11 @@
   color: #374151;
 }
 
+
+/* =========================================================
+   ACCIONES - PC
+   ========================================================= */
+
 .col-actions {
   display: flex;
   align-items: center;
@@ -114,7 +133,9 @@
 }
 
 
-/* ===== ESTADO ===== */
+/* =========================================================
+   ESTADO
+   ========================================================= */
 
 .col-status {
   display: flex;
@@ -123,6 +144,7 @@
 
 .badge {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
@@ -142,7 +164,9 @@
 }
 
 
-/* SOLICITADA */
+/* =========================================================
+   SOLICITADA
+   ========================================================= */
 
 .badge.requested {
   background: #fef3c7;
@@ -150,7 +174,9 @@
 }
 
 
-/* EN REVISIÓN */
+/* =========================================================
+   EN REVISIÓN
+   ========================================================= */
 
 .badge.review {
   background: #dbeafe;
@@ -158,7 +184,9 @@
 }
 
 
-/* APROBADA */
+/* =========================================================
+   APROBADA
+   ========================================================= */
 
 .badge.approved {
   background: #d9f5e3;
@@ -166,7 +194,9 @@
 }
 
 
-/* RECHAZADA */
+/* =========================================================
+   RECHAZADA
+   ========================================================= */
 
 .badge.rejected {
   background: #fee2e2;
@@ -174,7 +204,9 @@
 }
 
 
-/* COMPLETADA */
+/* =========================================================
+   COMPLETADA
+   ========================================================= */
 
 .badge.completed {
   background: #ede9fe;
@@ -182,7 +214,9 @@
 }
 
 
-/* ===== BOTÓN ===== */
+/* =========================================================
+   BOTÓN DETALLE - PC
+   ========================================================= */
 
 .detail-button {
   display: inline-flex;
@@ -205,21 +239,33 @@
   font-weight: 500;
 
   text-decoration: none;
-
   white-space: nowrap;
 
   transition:
-    background 0.15s,
-    color 0.15s;
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 
 .detail-button:hover {
   background: #e8650f;
   color: #fff;
+
+  box-shadow:
+    0 2px 6px rgba(232, 101, 15, 0.18);
+
+  transform: translateY(-1px);
+}
+
+.detail-button:active {
+  transform: translateY(0);
 }
 
 
-/* ===== CARGANDO / VACÍO ===== */
+/* =========================================================
+   CARGANDO / VACÍO
+   ========================================================= */
 
 .loading-card,
 .empty-card {
@@ -237,32 +283,555 @@
 
 .empty-icon {
   margin-bottom: 8px;
+
   font-size: 36px;
 }
 
 .empty-card h3 {
   margin: 0 0 4px;
+
   color: #111827;
 }
 
 .empty-card p {
   margin: 0;
+
   font-size: 13px;
 }
 
 
-/* ===== ERROR ===== */
+/* =========================================================
+   ERROR
+   ========================================================= */
 
 .error-message {
   margin-bottom: 16px;
+
   padding: 12px 16px;
 
   border: 1px solid #fecaca;
   border-radius: 8px;
 
   background: #fef2f2;
-
   color: #b91c1c;
 
   font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* =======================================================
+     PÁGINA
+     ======================================================= */
+
+  .page {
+    padding: 20px 14px 28px;
+  }
+
+
+  /* =======================================================
+     CABECERA
+     ======================================================= */
+
+  .page-heading {
+    margin-bottom: 18px;
+  }
+
+  .page-heading h1 {
+    margin-bottom: 6px;
+
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .page-heading p {
+    margin-bottom: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+
+  /* =======================================================
+     TABLA
+     ======================================================= */
+
+  .table-card {
+    background: transparent;
+
+    border: none;
+
+    box-shadow: none;
+
+    overflow: visible;
+  }
+
+  .table-scroll {
+    overflow: visible;
+  }
+
+
+  /* =======================================================
+     OCULTAR CABECERA EN CELULAR
+     ======================================================= */
+
+  .table-head {
+    display: none !important;
+  }
+
+
+  /* =======================================================
+     CARDS
+     ======================================================= */
+
+  .table-row {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    grid-template-areas:
+      "id status"
+      "purchase date"
+      "products total"
+      "actions actions";
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    margin-bottom: 12px;
+
+    padding: 16px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 13px;
+
+    box-shadow:
+      0 2px 7px rgba(0, 0, 0, 0.04);
+
+    column-gap: 14px;
+    row-gap: 12px;
+
+    font-size: 13px;
+
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .table-row:last-child {
+    margin-bottom: 0;
+
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .table-row:not(.table-head):hover {
+    background: #fff;
+
+    border-color: #dedfe3;
+
+    box-shadow:
+      0 3px 10px rgba(0, 0, 0, 0.06);
+  }
+
+
+  /* =======================================================
+     SOLICITUD
+     ======================================================= */
+
+  .col-id {
+    grid-area: id;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #111827;
+  }
+
+
+  /* =======================================================
+     ESTADO
+     ======================================================= */
+
+  .col-status {
+    grid-area: status;
+
+    justify-content: flex-end;
+  }
+
+  .badge {
+    min-width: auto;
+
+    height: 25px;
+
+    padding: 0 9px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+
+  /* =======================================================
+     COMPRA
+     ======================================================= */
+
+  .col-compra {
+    grid-area: purchase;
+
+    color: #374151;
+
+    font-size: 12px;
+  }
+
+  .col-compra::before {
+    content: "Compra";
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #9ca3af;
+
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+
+  /* =======================================================
+     FECHA
+     ======================================================= */
+
+  .col-date {
+    grid-area: date;
+
+    color: #6b7280;
+
+    font-size: 12px;
+
+    text-align: right;
+  }
+
+  .col-date::before {
+    content: "Fecha";
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #9ca3af;
+
+    font-size: 10px;
+  }
+
+
+  /* =======================================================
+     PRODUCTOS
+     ======================================================= */
+
+  .col-products {
+    grid-area: products;
+
+    color: #374151;
+
+    font-size: 12px;
+  }
+
+  .col-products::before {
+    content: "Productos";
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #9ca3af;
+
+    font-size: 10px;
+  }
+
+
+  /* =======================================================
+     TOTAL
+     ======================================================= */
+
+  .col-total {
+    grid-area: total;
+
+    align-self: end;
+
+    color: #111827;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-align: right;
+  }
+
+  .col-total::before {
+    content: "Total devolución";
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #9ca3af;
+
+    font-size: 10px;
+
+    font-weight: 400;
+  }
+
+
+  /* =======================================================
+     ACCIONES - BOTÓN VER
+     ======================================================= */
+
+  .col-actions {
+    grid-area: actions;
+
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin-top: 2px;
+    padding-top: 12px;
+
+    border-top: 1px solid #f0f1f5;
+  }
+
+
+  /* =======================================================
+     BOTÓN VER - MÓVIL
+     ======================================================= */
+
+  .detail-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    min-width: 64px;
+    height: 34px;
+
+    padding: 0 16px;
+
+    border: 1px solid #e8650f;
+    border-radius: 7px;
+
+    background: #fff;
+    color: #e8650f;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .detail-button:hover {
+    background: #e8650f;
+    color: #fff;
+
+    box-shadow:
+      0 3px 8px rgba(232, 101, 15, 0.18);
+
+    transform: translateY(-1px);
+  }
+
+  .detail-button:active {
+    transform: translateY(0);
+  }
+
+
+  /* =======================================================
+     CARGANDO / VACÍO
+     ======================================================= */
+
+  .loading-card,
+  .empty-card {
+    padding: 34px 18px;
+
+    border-radius: 12px;
+  }
+
+  .empty-icon {
+    font-size: 34px;
+  }
+
+  .empty-card h3 {
+    font-size: 15px;
+  }
+
+  .empty-card p {
+    font-size: 12px;
+
+    line-height: 1.5;
+  }
+
+
+  /* =======================================================
+     ERROR
+     ======================================================= */
+
+  .error-message {
+    margin-bottom: 14px;
+
+    padding: 11px 13px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================================
+   CELULARES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  /* =======================================================
+     PÁGINA
+     ======================================================= */
+
+  .page {
+    padding: 18px 12px 24px;
+  }
+
+
+  /* =======================================================
+     CABECERA
+     ======================================================= */
+
+  .page-heading h1 {
+    font-size: 20px;
+  }
+
+  .page-heading p {
+    font-size: 11px;
+
+    line-height: 1.5;
+  }
+
+
+  /* =======================================================
+     CARD
+     ======================================================= */
+
+  .table-row {
+    margin-bottom: 10px;
+
+    padding: 14px;
+
+    border-radius: 11px;
+
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+
+  /* =======================================================
+     TEXTOS
+     ======================================================= */
+
+  .col-id {
+    font-size: 13px;
+  }
+
+  .col-compra,
+  .col-date,
+  .col-products {
+    font-size: 11px;
+  }
+
+  .col-compra::before,
+  .col-date::before,
+  .col-products::before,
+  .col-total::before {
+    font-size: 9px;
+  }
+
+
+  /* =======================================================
+     ESTADO
+     ======================================================= */
+
+  .badge {
+    height: 24px;
+
+    padding: 0 8px;
+
+    border-radius: 5px;
+
+    font-size: 9px;
+  }
+
+
+  /* =======================================================
+     TOTAL
+     ======================================================= */
+
+  .col-total {
+    font-size: 14px;
+  }
+
+
+  /* =======================================================
+     BOTÓN VER - CELULAR PEQUEÑO
+     ======================================================= */
+
+  .col-actions {
+    display: flex !important;
+
+    justify-content: center;
+
+    width: 100%;
+
+    padding-top: 10px;
+  }
+
+  .detail-button {
+    min-width: 60px;
+
+    height: 32px;
+
+    padding: 0 14px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+  }
+
+
+  /* =======================================================
+     EMPTY
+     ======================================================= */
+
+  .loading-card,
+  .empty-card {
+    padding: 30px 16px;
+  }
 }

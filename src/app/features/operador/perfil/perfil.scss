@@ -1,1 +1,173 @@
 
+:host {
+  display: block;
+}
+
+.perfil-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.page-header {
+  margin-bottom: 28px;
+
+  h1 {
+    margin: 0;
+    color: #111827;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 7px 0 0;
+    color: #6b7280;
+    font-size: 14px;
+  }
+}
+
+.perfil-contenido {
+  border-top: 1px solid #e5e7eb;
+}
+
+.perfil-identidad {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 0;
+}
+
+.avatar {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.perfil-identidad h2 {
+  margin: 0 0 7px;
+  color: #111827;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.rol {
+  display: inline-block;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.linea {
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.datos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+}
+
+.dato {
+  padding: 22px 24px 22px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dato:nth-child(odd) {
+  margin-right: 24px;
+}
+
+.dato span {
+  display: block;
+  margin-bottom: 7px;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dato strong {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.estado {
+  color: #166534 !important;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 24px;
+}
+
+.btn-salir {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  padding: 9px 16px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #f9fafb;
+  }
+}
+
+.sin-sesion {
+  padding: 30px 0;
+  border-top: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 14px;
+
+  button {
+    margin-top: 12px;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 5px;
+    background: #111827;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 600px) {
+  .perfil-page {
+    padding: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .datos {
+    grid-template-columns: 1fr;
+  }
+
+  .dato {
+    margin-right: 0 !important;
+    padding-right: 0;
+  }
+
+  .acciones {
+    justify-content: stretch;
+  }
+
+  .btn-salir {
+    width: 100%;
+  }
+}

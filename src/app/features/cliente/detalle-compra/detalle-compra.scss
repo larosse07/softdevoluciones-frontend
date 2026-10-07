@@ -348,22 +348,496 @@ tbody tr:hover {
 
   font-size: 13px;
 }
-
-
-/* ===== RESPONSIVE ===== */
+/* =========================================
+   RESPONSIVE - DETALLE DE COMPRA
+   ========================================= */
 
 @media (max-width: 768px) {
 
+  /* ===== PÁGINA ===== */
+
   .page {
-    padding: 20px;
+    padding: 18px 14px 28px;
+  }
+
+
+  /* =========================================
+     BREADCRUMB
+     ========================================= */
+
+  .breadcrumb {
+    gap: 6px;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+
+  .breadcrumb .sep {
+    font-size: 16px;
+  }
+
+
+  /* =========================================
+     CABECERA
+     ========================================= */
+
+  .detail-header {
+    margin-bottom: 18px;
+  }
+
+  .detail-header h1 {
+    margin-bottom: 8px;
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .detail-meta {
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .detail-meta .divider {
+    display: none;
+  }
+
+  .detail-meta .state-label {
+    margin-left: 3px;
+  }
+
+  .badge {
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 10px;
+  }
+
+
+  /* =========================================
+     CONTENEDOR PRINCIPAL
+     ========================================= */
+
+  .table-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
   }
 
   .table-wrapper {
-    overflow-x: auto;
+    overflow: visible;
+  }
+
+
+  /* =========================================
+     OCULTAR TABLA REAL
+     ========================================= */
+
+  table {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    border-collapse: separate;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+
+  /* =========================================
+     CADA PRODUCTO = TARJETA
+     ========================================= */
+
+  tbody tr {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    grid-template-areas:
+      "product product"
+      "price quantity"
+      "subtotal subtotal"
+      "action action";
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    padding: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+
+    box-shadow:
+      0 2px 7px rgba(0, 0, 0, 0.04);
+
+    overflow: hidden;
+
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  tbody tr:hover {
+    background: #ffffff;
+    border-color: #dfe1e5;
+
+    box-shadow:
+      0 3px 10px rgba(0, 0, 0, 0.06);
+  }
+
+
+  /* =========================================
+     CELDAS
+     ========================================= */
+
+  tbody td {
+    padding: 0;
+    border: none;
+    font-size: 13px;
+    min-width: 0;
+  }
+
+
+  /* =========================================
+     PRODUCTO
+     ========================================= */
+
+  tbody td:nth-child(1) {
+    grid-area: product;
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid #f0f1f5;
+  }
+
+  .product-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .product-image {
+    flex: 0 0 58px;
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 10px;
+
+    background: #f8f8f8;
+    border: 1px solid #e8e8ea;
+
+    font-size: 18px;
+  }
+
+  .product-text {
+    gap: 4px;
+  }
+
+  .product-text strong {
+    font-size: 14px;
+    line-height: 1.35;
+
+    color: #111827;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-text span {
+    font-size: 11px;
+    line-height: 1.4;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+
+  /* =========================================
+     PRECIO UNITARIO
+     ========================================= */
+
+  tbody td:nth-child(2) {
+    grid-area: price;
+
+    padding-top: 13px;
+
+    color: #6b7280;
+    font-size: 12px;
+  }
+
+  tbody td:nth-child(2)::before {
+    content: "Precio unitario";
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #9ca3af;
+    font-size: 10px;
+  }
+
+
+  /* =========================================
+     CANTIDAD
+     ========================================= */
+
+  tbody td:nth-child(3) {
+    grid-area: quantity;
+
+    padding-top: 13px;
+
+    text-align: right;
+
+    color: #374151;
+    font-size: 12px;
+  }
+
+  tbody td:nth-child(3)::before {
+    content: "Cantidad";
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #9ca3af;
+    font-size: 10px;
+  }
+
+
+  /* =========================================
+     SUBTOTAL
+     ========================================= */
+
+  tbody td:nth-child(4) {
+    grid-area: subtotal;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 12px;
+    padding-top: 12px;
+
+    border-top: 1px solid #f0f1f5;
+
+    color: #111827;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  tbody td:nth-child(4)::before {
+    content: "Subtotal";
+
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+
+  /* =========================================
+     ACCIONES
+     ========================================= */
+
+  tbody td:nth-child(5) {
+    grid-area: action;
+
+    width: 100%;
+
+    margin-top: 13px;
+    padding-top: 13px;
+
+    border-top: 1px solid #f0f1f5;
+
+    text-align: center;
   }
 
   .col-actions {
-    width: 170px;
+    width: 100%;
+    text-align: center;
   }
 
+
+  /* ===== BOTÓN DEVOLUCIÓN ===== */
+
+  .detail-button {
+    width: 100%;
+
+    min-width: 0;
+    height: 38px;
+
+    padding: 0 12px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    box-sizing: border-box;
+  }
+
+
+  /* ===== NO DISPONIBLE ===== */
+
+  .no-return {
+    width: 100%;
+
+    min-width: 0;
+    height: 36px;
+
+    box-sizing: border-box;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+  }
+
+
+  /* =========================================
+     TOTAL DE LA COMPRA
+     ========================================= */
+
+  .table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 12px;
+    padding: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    box-shadow:
+      0 2px 7px rgba(0, 0, 0, 0.04);
+
+    font-size: 12px;
+  }
+
+  .table-footer strong {
+    font-size: 17px;
+  }
+
+
+  /* =========================================
+     CARGANDO / ERROR
+     ========================================= */
+
+  .loading-card {
+    padding: 32px 18px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+  }
+
+  .error-message {
+    margin-bottom: 14px;
+    padding: 11px 13px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================
+   CELULARES PEQUEÑOS
+   ========================================= */
+
+@media (max-width: 400px) {
+
+  .page {
+    padding: 16px 12px 24px;
+  }
+
+
+  /* ===== CABECERA ===== */
+
+  .detail-header h1 {
+    font-size: 20px;
+  }
+
+  .detail-meta {
+    font-size: 11px;
+  }
+
+
+  /* ===== CARD PRODUCTO ===== */
+
+  tbody tr {
+    padding: 14px;
+
+    border-radius: 11px;
+  }
+
+  .product-detail {
+    gap: 10px;
+  }
+
+  .product-image {
+    flex-basis: 52px;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 9px;
+  }
+
+  .product-text strong {
+    font-size: 13px;
+  }
+
+  .product-text span {
+    font-size: 10px;
+  }
+
+
+  /* ===== DATOS ===== */
+
+  tbody td:nth-child(2),
+  tbody td:nth-child(3) {
+    font-size: 11px;
+  }
+
+  tbody td:nth-child(4) {
+    font-size: 14px;
+  }
+
+
+  /* ===== BOTÓN ===== */
+
+  .detail-button {
+    height: 36px;
+
+    font-size: 11px;
+  }
+
+
+  /* ===== TOTAL ===== */
+
+  .table-footer {
+    padding: 14px;
+
+    font-size: 11px;
+  }
+
+  .table-footer strong {
+    font-size: 16px;
+  }
 }

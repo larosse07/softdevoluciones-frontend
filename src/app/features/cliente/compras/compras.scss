@@ -22,7 +22,9 @@
 }
 
 
-/* ===== FILTROS ===== */
+/* =========================================
+   FILTROS
+   ========================================= */
 
 .filters-card {
   display: flex;
@@ -71,7 +73,9 @@
 }
 
 
-/* ===== TABLA ===== */
+/* =========================================
+   TABLA
+   ========================================= */
 
 .table-card {
   background: #fff;
@@ -132,7 +136,9 @@
 }
 
 
-/* ===== ESTADO ===== */
+/* =========================================
+   ESTADO
+   ========================================= */
 
 .col-status {
   display: flex;
@@ -140,7 +146,7 @@
 }
 
 
-/* BASE DEL RECTÁNGULO */
+/* Base del estado */
 
 .badge {
   display: inline-flex;
@@ -158,7 +164,6 @@
   font-weight: 600;
 
   line-height: 1;
-
   white-space: nowrap;
 }
 
@@ -213,7 +218,9 @@
 }
 
 
-/* ===== BOTÓN ===== */
+/* =========================================
+   BOTÓN
+   ========================================= */
 
 .detail-button {
   display: inline-flex;
@@ -245,7 +252,9 @@
 }
 
 
-/* ===== ESTADOS VACÍO / CARGA / ERROR ===== */
+/* =========================================
+   ESTADOS VACÍO / CARGA / ERROR
+   ========================================= */
 
 .loading-card,
 .empty-card {
@@ -288,4 +297,318 @@
   color: #b91c1c;
 
   font-size: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVE - TABLET / CELULAR
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  .page {
+    padding: 20px 14px;
+  }
+
+
+  /* ===== ENCABEZADO ===== */
+
+  .page-heading h1 {
+    font-size: 22px;
+  }
+
+  .page-heading p {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+
+  /* =========================================
+     FILTROS
+     ========================================= */
+
+  .filters-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-box input,
+  .filters-card select {
+    width: 100%;
+    height: 40px;
+  }
+
+
+  /* =========================================
+     CONTENEDOR DE COMPRAS
+     ========================================= */
+
+  .table-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .table-scroll {
+    overflow: visible;
+  }
+
+
+  /* =========================================
+     OCULTAR ENCABEZADO DE TABLA
+     ========================================= */
+
+  .table-head {
+    display: none !important;
+  }
+
+
+  /* =========================================
+     CADA COMPRA SE CONVIERTE EN CARD
+     ========================================= */
+
+  .table-row {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    grid-template-areas:
+      "id status"
+      "date total"
+      "actions actions";
+
+    min-width: 0;
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-bottom: 12px;
+    padding: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e6e7eb;
+    border-radius: 12px;
+
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.04);
+
+    column-gap: 14px;
+    row-gap: 12px;
+
+    font-size: 13px;
+
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .table-row:last-child {
+    border-bottom: 1px solid #e6e7eb;
+  }
+
+  .table-row:not(.table-head):hover {
+    background: #ffffff;
+    border-color: #dedfe3;
+    box-shadow:
+      0 3px 8px rgba(0, 0, 0, 0.06);
+  }
+
+
+  /* =========================================
+     NÚMERO DE COMPRA
+     ========================================= */
+
+  .col-id {
+    grid-area: id;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #111827;
+
+    align-self: center;
+  }
+
+
+  /* =========================================
+     ESTADO
+     ========================================= */
+
+  .col-status {
+    grid-area: status;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .badge {
+    min-width: auto;
+
+    height: 25px;
+
+    padding: 0 9px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+
+  /* =========================================
+     FECHA
+     ========================================= */
+
+  .col-date {
+    grid-area: date;
+
+    color: #6b7280;
+
+    font-size: 12px;
+
+    align-self: center;
+  }
+
+
+  /* =========================================
+     TOTAL
+     ========================================= */
+
+  .col-total {
+    grid-area: total;
+
+    text-align: right;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #111827;
+
+    align-self: center;
+  }
+
+
+  /* =========================================
+     BOTÓN
+     ========================================= */
+
+  .col-actions {
+    grid-area: actions;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: stretch;
+
+    padding-top: 2px;
+  }
+
+  .detail-button {
+    width: 100%;
+
+    min-height: 34px;
+
+    box-sizing: border-box;
+
+    padding: 7px 12px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+
+  /* =========================================
+     ESTADOS VACÍO / CARGA
+     ========================================= */
+
+  .loading-card,
+  .empty-card {
+    padding: 32px 18px;
+  }
+}
+
+
+/* =========================================
+   CELULARES PEQUEÑOS
+   ========================================= */
+
+@media (max-width: 400px) {
+
+  .page {
+    padding: 18px 12px;
+  }
+
+
+  /* Encabezado */
+
+  .page-heading h1 {
+    font-size: 20px;
+  }
+
+  .page-heading p {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+
+  /* Card */
+
+  .table-row {
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    border-radius: 11px;
+
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+
+  /* Compra */
+
+  .col-id {
+    font-size: 13px;
+  }
+
+  .col-date {
+    font-size: 11px;
+  }
+
+  .col-total {
+    font-size: 13px;
+  }
+
+
+  /* Estado */
+
+  .badge {
+    height: 24px;
+
+    padding: 0 8px;
+
+    font-size: 10px;
+
+    border-radius: 5px;
+  }
+
+
+  /* Botón */
+
+  .detail-button {
+    min-height: 33px;
+
+    font-size: 11px;
+  }
 }

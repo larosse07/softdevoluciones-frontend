@@ -1,270 +1,305 @@
+
+/* =========================================================
+   PÁGINA
+   ========================================================= */
+
 .page {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1500px;
+
   margin: 0 auto;
-  padding: 32px;
+  padding: 28px 30px;
+
   box-sizing: border-box;
 }
 
+
+/* =========================================================
+   CABECERA
+   ========================================================= */
+
 .page-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 28px;
-
-  h1 {
-    margin: 0 0 6px;
-    font-size: 28px;
-    font-weight: 700;
-    color: #1f2937;
-  }
-
-  p {
-    margin: 0;
-    font-size: 14px;
-    color: #6b7280;
-  }
+  margin-bottom: 24px;
 }
 
-.primary-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 18px;
-  border-radius: 8px;
-  background: #111827;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  transition: background 0.2s ease;
+.page-header h1 {
+  margin: 0 0 5px;
 
-  &:hover {
-    background: #374151;
-  }
+  color: #1f2937;
+
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 700;
 }
 
+.page-header p {
+  margin: 0;
 
-/* =========================
-   RESUMEN DE ESTADOS
-   ========================= */
-
-.summary {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  background: #ffffff;
-  margin-bottom: 32px;
-  overflow: hidden;
-}
-
-.summary-item {
-  min-height: 110px;
-  padding: 20px 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-
-  border-right: 1px solid #e5e7eb;
-
-  &:last-child {
-    border-right: none;
-  }
-
-  .label {
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  strong {
-    font-size: 30px;
-    font-weight: 700;
-  }
-}
-
-
-/* Solicitadas */
-
-.summary-item:nth-child(1) {
-
-  .label {
-    color: #6b7280;
-  }
-
-  strong {
-    color: #374151;
-  }
-}
-
-
-/* En revisión */
-
-.summary-item:nth-child(2) {
-
-  .label {
-    color: #c2410c;
-  }
-
-  strong {
-    color: #ea580c;
-  }
-}
-
-
-/* Aprobadas */
-
-.summary-item:nth-child(3) {
-
-  .label {
-    color: #047857;
-  }
-
-  strong {
-    color: #059669;
-  }
-}
-
-
-/* Rechazadas */
-
-.summary-item:nth-child(4) {
-
-  .label {
-    color: #b91c1c;
-  }
-
-  strong {
-    color: #dc2626;
-  }
-}
-
-
-/* Completadas */
-
-.summary-item:nth-child(5) {
-
-  .label {
-    color: #1d4ed8;
-  }
-
-  strong {
-    color: #2563eb;
-  }
-}
-
-
-/* =========================
-   TABLA
-   ========================= */
-
-.recent-section {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.section-header {
-  padding: 22px 24px;
-  border-bottom: 1px solid #e5e7eb;
-
-  h2 {
-    margin: 0 0 5px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #1f2937;
-  }
-
-  p {
-    margin: 0;
-    font-size: 13px;
-    color: #6b7280;
-  }
-}
-
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 800px;
-}
-
-thead {
-  background: #f9fafb;
-}
-
-th {
-  padding: 14px 20px;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
   color: #6b7280;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
-}
 
-td {
-  padding: 16px 20px;
-  border-bottom: 1px solid #f0f1f3;
-  color: #374151;
-  font-size: 14px;
-  vertical-align: middle;
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-tbody tr:hover {
-  background: #fafafa;
-}
-
-.request-number {
-  font-weight: 700;
-  color: #111827;
-  white-space: nowrap;
-}
-
-.amount {
-  font-weight: 600;
-  color: #111827;
-  white-space: nowrap;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 
-/* =========================
-   ESTADOS DE LA TABLA
-   ========================= */
+/* =========================================================
+   KANBAN
+   ========================================================= */
 
-.status {
-  display: inline-flex;
+.kanban {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(250px, 1fr));
+
+  gap: 16px;
+
+  width: 100%;
+
+  align-items: start;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   COLUMNA
+   ========================================================= */
+
+.kanban-column {
+  width: 100%;
+  min-width: 0;
+
+  background: #f8fafc;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CABECERA DE COLUMNA
+   ========================================================= */
+
+.column-header {
+  padding: 13px 14px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.column-header > div {
+  display: flex;
+
   align-items: center;
-  min-height: 28px;
-  padding: 0 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
+  justify-content: space-between;
+
+  gap: 10px;
 }
 
-.status.solicitada {
+.column-header h2 {
+  margin: 0;
+
+  color: #374151;
+
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.column-header span {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 23px;
+  height: 23px;
+
+  padding: 0 6px;
+
+  border-radius: 50%;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   COLORES DE COLUMNAS
+   ========================================================= */
+
+.column-header.solicitada {
+  border-top: 3px solid #6b7280;
+}
+
+.column-header.solicitada span {
   background: #f3f4f6;
   color: #374151;
 }
 
+
+.column-header.en-revision {
+  border-top: 3px solid #f59e0b;
+}
+
+.column-header.en-revision span {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+
+.column-header.aprobada {
+  border-top: 3px solid #10b981;
+}
+
+.column-header.aprobada span {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+
+.column-header.rechazada {
+  border-top: 3px solid #ef4444;
+}
+
+.column-header.rechazada span {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+
+.column-header.completada {
+  border-top: 3px solid #3b82f6;
+}
+
+.column-header.completada span {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+
+/* =========================================================
+   CONTENIDO DE COLUMNA
+   ========================================================= */
+
+.column-content {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  min-height: 150px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TICKET
+   ========================================================= */
+
+.ticket {
+  width: 100%;
+  min-width: 0;
+
+  padding: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03);
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.ticket:hover {
+  border-color: #d1d5db;
+
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================================================
+   PARTE SUPERIOR
+   ========================================================= */
+
+.ticket-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 14px;
+
+  min-width: 0;
+}
+
+.ticket-top strong {
+  min-width: 0;
+
+  color: #111827;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.status {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 24px;
+
+  padding: 0 8px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  flex-shrink: 0;
+}
+
+.status.solicitada {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
 .status.en-revision {
   background: #fff7ed;
-  color: #9a3412;
+  color: #c2410c;
 }
 
 .status.aprobada {
@@ -283,162 +318,592 @@ tbody tr:hover {
 }
 
 
-/* =========================
-   LINK VER
-   ========================= */
+/* =========================================================
+   INFORMACIÓN
+   ========================================================= */
 
-.detail-link {
-  color: #2563eb;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
+.ticket-info {
+  margin-bottom: 11px;
 
-  &:hover {
-    text-decoration: underline;
-  }
+  min-width: 0;
+}
+
+.ticket-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #9ca3af;
+
+  font-size: 9px;
+  line-height: 1.2;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ticket-info p {
+  margin: 0;
+
+  color: #374151;
+
+  font-size: 12px;
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 
-/* =========================
+/* =========================================================
+   IMPORTE
+   ========================================================= */
+
+.ticket-bottom {
+  display: flex;
+
+  align-items: center;
+
+  padding-top: 10px;
+  margin-top: 3px;
+
+  border-top: 1px solid #f0f1f3;
+}
+
+.amount {
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ACCIONES
+   ========================================================= */
+
+.ticket-actions {
+  width: 100%;
+
+  margin-top: 13px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BOTÓN ACCIONES
+   ========================================================= */
+
+.actions-toggle {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 35px;
+
+  padding: 0 11px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  list-style: none;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+/*
+  Ocultamos la flecha nativa del details.
+*/
+
+.actions-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.actions-toggle::marker {
+  display: none;
+}
+
+
+.actions-toggle:hover {
+  background: #f9fafb;
+
+  border-color: #d1d5db;
+}
+
+
+/* =========================================================
+   FLECHA
+   ========================================================= */
+
+.actions-arrow {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  color: #6b7280;
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+/*
+  Cuando details está abierto,
+  giramos la flecha.
+*/
+
+.ticket-actions[open] .actions-arrow {
+  transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   MENÚ DESPLEGABLE
+   ========================================================= */
+
+.actions-menu {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  margin-top: 7px;
+  padding: 8px;
+
+  background: #f9fafb;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+
+  box-sizing: border-box;
+
+  animation: actionsOpen 0.16s ease;
+}
+
+
+@keyframes actionsOpen {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   BOTONES DENTRO DEL MENÚ
+   ========================================================= */
+
+.actions-menu a,
+.actions-menu button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 34px;
+
+  padding: 0 10px;
+
+  border-radius: 5px;
+
+  box-sizing: border-box;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-align: center;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+
+/* =========================================================
+   VER DETALLE
+   ========================================================= */
+
+.actions-menu .secondary-button {
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+
+  color: #374151;
+}
+
+.actions-menu .secondary-button:hover {
+  background: #f3f4f6;
+
+  border-color: #9ca3af;
+}
+
+
+/* =========================================================
+   INICIAR REVISIÓN
+   ========================================================= */
+
+.actions-menu .primary-button {
+  border: 1px solid #111827;
+
+  background: #111827;
+
+  color: #ffffff;
+}
+
+.actions-menu .primary-button:hover {
+  background: #374151;
+
+  border-color: #374151;
+}
+
+
+/* =========================================================
+   APROBAR
+   ========================================================= */
+
+.actions-menu .approve-button {
+  border: 1px solid #059669;
+
+  background: #059669;
+
+  color: #ffffff;
+}
+
+.actions-menu .approve-button:hover {
+  background: #047857;
+
+  border-color: #047857;
+}
+
+
+/* =========================================================
+   RECHAZAR
+   ========================================================= */
+
+.actions-menu .reject-button {
+  border: 1px solid #fecaca;
+
+  background: #ffffff;
+
+  color: #dc2626;
+}
+
+.actions-menu .reject-button:hover {
+  background: #fef2f2;
+
+  border-color: #fca5a5;
+}
+
+
+/* =========================================================
+   COMPLETAR
+   ========================================================= */
+
+.actions-menu .complete-button {
+  border: 1px solid #2563eb;
+
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+.actions-menu .complete-button:hover {
+  background: #1d4ed8;
+
+  border-color: #1d4ed8;
+}
+
+
+/* =========================================================
+   DESHABILITADO
+   ========================================================= */
+
+.actions-menu button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   COLUMNA VACÍA
+   ========================================================= */
+
+.empty-column {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100px;
+
+  padding: 20px 12px;
+
+  background: #ffffff;
+
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+
+  box-sizing: border-box;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
    MENSAJES
-   ========================= */
+   ========================================================= */
 
 .message {
-  padding: 24px;
+  width: 100%;
+
+  padding: 22px;
+
+  background: #ffffff;
+
   border: 1px solid #e5e7eb;
   border-radius: 10px;
-  background: #ffffff;
+
+  box-sizing: border-box;
+
   color: #6b7280;
-  font-size: 14px;
+
+  font-size: 13px;
+
   text-align: center;
 }
 
 .message.error {
-  border-color: #fecaca;
   background: #fef2f2;
+
+  border-color: #fecaca;
+
   color: #b91c1c;
 }
 
-/* FILTROS */
 
-.filters {
-  display: flex;
-  align-items: flex-end;
-  gap: 16px;
-  padding: 18px 20px;
-  margin-bottom: 28px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-}
+/* =========================================================
+   LAPTOP
+   ========================================================= */
 
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+@media (max-width: 1250px) {
 
-.filter-group label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b7280;
-}
-
-.filter-group select,
-.filter-group input {
-  height: 40px;
-  min-width: 170px;
-  padding: 0 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 7px;
-  background: #ffffff;
-  color: #374151;
-  font-size: 14px;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.filter-group select:focus,
-.filter-group input:focus {
-  border-color: #9ca3af;
-}
-
-.search-button {
-  height: 40px;
-  padding: 0 20px;
-  border: none;
-  border-radius: 7px;
-  background: #111827;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.search-button:hover {
-  background: #374151;
-}
-
-.search-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-/* =========================
-   RESPONSIVE
-   ========================= */
-
-@media (max-width: 1100px) {
-
-  .summary {
-    grid-template-columns: repeat(3, 1fr);
+  .page {
+    padding: 24px;
   }
 
-  .summary-item {
-    border-bottom: 1px solid #e5e7eb;
+  .kanban {
+    grid-template-columns:
+      repeat(2, minmax(250px, 1fr));
 
-    &:nth-child(3) {
-      border-right: none;
-    }
-
-    &:nth-child(4),
-    &:nth-child(5) {
-      border-bottom: none;
-    }
+    gap: 14px;
   }
+
 }
 
 
-@media (max-width: 700px) {
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
 
   .page {
     padding: 20px;
   }
 
-  .page-header {
-    flex-direction: column;
+  .kanban {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
   }
 
-  .summary {
-    grid-template-columns: 1fr 1fr;
+  .column-header {
+    padding: 12px;
   }
 
-  .summary-item {
-
-    border-right: 1px solid #e5e7eb;
-
-    &:nth-child(2n) {
-      border-right: none;
-    }
-
-    &:nth-child(4) {
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    &:nth-child(5) {
-      grid-column: 1 / -1;
-      border-right: none;
-      border-bottom: none;
-    }
+  .column-content {
+    padding: 9px;
   }
+
+  .ticket {
+    padding: 12px;
+  }
+
 }
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .page {
+    width: 100%;
+
+    padding: 16px 12px;
+  }
+
+
+  .page-header {
+    margin-bottom: 18px;
+  }
+
+
+  .page-header h1 {
+    font-size: 23px;
+  }
+
+
+  .page-header p {
+    font-size: 12px;
+  }
+
+
+  /*
+    Una columna por estado.
+  */
+
+  .kanban {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    width: 100%;
+  }
+
+
+  .kanban-column {
+    width: 100%;
+  }
+
+
+  .column-header {
+    padding: 12px 13px;
+  }
+
+
+  .column-header h2 {
+    font-size: 13px;
+  }
+
+
+  .column-content {
+    padding: 9px;
+  }
+
+
+  .ticket {
+    padding: 13px;
+  }
+
+
+  /*
+    Los botones del menú siempre ocupan
+    todo el ancho en móvil.
+  */
+
+  .actions-menu a,
+  .actions-menu button {
+    min-height: 38px;
+
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUEÑO
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .page {
+    padding: 13px 10px;
+  }
+
+
+  .page-header h1 {
+    font-size: 21px;
+  }
+
+
+  .page-header p {
+    font-size: 11px;
+  }
+
+
+  .ticket-top {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 7px;
+  }
+
+
+  .ticket-top .status {
+    align-self: flex-start;
+  }
+
+
+  .actions-toggle {
+    min-height: 37px;
+  }
+
+
+  .actions-menu {
+    padding: 7px;
+  }
+
+}
+

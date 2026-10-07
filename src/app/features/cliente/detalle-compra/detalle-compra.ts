@@ -14,7 +14,14 @@ import {
 } from '@angular/router';
 
 import { ComprasService } from '../../../core/services/compras';
+import { DevolucionesService } from '../../../core/services/devoluciones';
+
 import { Compra } from '../../../core/models/compra.model';
+
+import {
+  Devolucion,
+  EstadoDevolucion
+} from '../../../core/models/devolucion.model';
 
 @Component({
   selector: 'app-detalle-compra',
@@ -37,10 +44,15 @@ export class DetalleCompra implements OnInit {
   private readonly comprasService =
     inject(ComprasService);
 
+  private readonly devolucionesService =
+    inject(DevolucionesService);
+
   private readonly changeDetector =
     inject(ChangeDetectorRef);
 
   compra: Compra | null = null;
+
+  devoluciones: Devolucion[] = [];
 
   loading = true;
   error = '';
@@ -75,9 +87,7 @@ export class DetalleCompra implements OnInit {
 
           this.compra = respuesta;
 
-          this.loading = false;
-
-          this.changeDetector.detectChanges();
+          this.cargarDevoluciones();
         },
 
         error: (error) => {
@@ -95,6 +105,88 @@ export class DetalleCompra implements OnInit {
           this.changeDetector.detectChanges();
         }
       });
+  }
+
+  private cargarDevoluciones(): void {
+
+    this.devolucionesService
+      .listarMisDevoluciones()
+      .subscribe({
+
+        next: (devoluciones) => {
+
+          this.devoluciones =
+            devoluciones ?? [];
+
+          this.loading = false;
+
+          this.changeDetector.detectChanges();
+        },
+
+        error: (error) => {
+
+          console.error(
+            'ERROR CARGANDO DEVOLUCIONES:',
+            error
+          );
+
+          this.devoluciones = [];
+
+          this.loading = false;
+
+          this.changeDetector.detectChanges();
+        }
+      });
+  }
+
+  tieneDevolucion(
+    detalle: any
+  ): boolean {
+
+    if (!this.compra) {
+      return false;
+    }
+
+    return this.devoluciones.some(
+      devolucion => {
+
+        // La devolución debe pertenecer
+        // a la compra actual.
+        if (
+          devolucion.compraId !==
+          this.compra!.id
+        ) {
+          return false;
+        }
+
+        // Revisar si la devolución
+        // corresponde a este detalle de compra.
+        const correspondeAlDetalle =
+          devolucion.detalles?.some(
+            detalleDevolucion =>
+              detalleDevolucion.detalleCompraId ===
+              detalle.id
+          );
+
+        if (!correspondeAlDetalle) {
+          return false;
+        }
+
+        // Estados que impiden solicitar
+        // otra devolución.
+        const estadosBloqueados:
+          EstadoDevolucion[] = [
+            'SOLICITADA',
+            'EN_REVISION',
+            'APROBADA',
+            'COMPLETADA'
+          ];
+
+        return estadosBloqueados.includes(
+          devolucion.estado
+        );
+      }
+    );
   }
 
   solicitarDevolucion(
@@ -188,4 +280,3 @@ export class DetalleCompra implements OnInit {
     return clases[estado] ?? 'pending';
   }
 }
-
